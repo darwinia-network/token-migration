@@ -12,7 +12,7 @@ const navData = [
 ] as { text: string; link: string }[];
 
 const Header = () => (
-  <div className="py-4">
+  <div className="h-14 flex flex-col justify-center">
     <div className="container mx-auto flex items-center justify-between">
       <Image src="/images/logo.svg" width={178} height={22} />
       <div className="flex items-center space-x-5">
