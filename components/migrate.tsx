@@ -1,9 +1,13 @@
 import Image from "next/image";
+import { useState } from "react";
 
 import CoonectToMetaMask from "./connect-metamask";
+import TokenSelector from "./token-selector";
 import { toShortAddress } from "../utils";
 
 export default () => {
+  const [isConnected, setIsConnected] = useState(false);
+
   return (
     <div className="border-[2px] border-primary h-full">
       <div className="bg-primary h-16 flex justify-between items-center px-4">
@@ -22,7 +26,14 @@ export default () => {
         </div>
       </div>
 
-      <CoonectToMetaMask className="h-full pb-16" />
+      {isConnected ? (
+        <div className="pt-4 pb-2 px-4">
+          <TokenSelector label="Amount to migrate (Old token)" />
+          <TokenSelector label="You receive (New token)" className="mt-5" isForNewToken />
+        </div>
+      ) : (
+        <CoonectToMetaMask className="h-full pb-16" onClick={() => setIsConnected(true)} />
+      )}
     </div>
   );
 };
