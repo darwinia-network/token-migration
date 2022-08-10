@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 
 import Layout from "../components/layout";
+import Migrate from "../components/migrate";
 import Instructions from "../components/instructions";
 
 const Home: NextPage = () => {
@@ -13,9 +14,9 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <div className="flex items-start justify-center space-x-20">
-          <div className="flex-1 border border-[#FF0083] h-[594px]"></div>
-          <Instructions classname="flex-1" />
+        <div className="grid grid-cols-2 gap-x-20">
+          <Migrate />
+          <Instructions />
         </div>
       </Layout>
     </>
