@@ -8,6 +8,9 @@ module.exports = {
         "2xl": "10rem",
       },
     },
+    colors: {
+      primary: "#FF0083",
+    },
     extend: {},
   },
   plugins: [],
