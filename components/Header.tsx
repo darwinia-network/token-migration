@@ -11,8 +11,8 @@ const navData = [
   },
 ] as { text: string; link: string }[];
 
-const Header = () => (
-  <div className="h-16 flex flex-col justify-center w-full absolute top-0 left-0">
+const Header = ({ className }: { className?: string }) => (
+  <header className={`h-16 flex flex-col justify-center w-full ${className}`}>
     <div className="container mx-auto flex items-center justify-between">
       <Image src="/images/logo.svg" width={178} height={22} />
       <div className="flex items-center space-x-5">
@@ -23,7 +23,7 @@ const Header = () => (
         ))}
       </div>
     </div>
-  </div>
+  </header>
 );
 
 export default Header;

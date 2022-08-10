@@ -24,8 +24,8 @@ const social = [
   },
 ] as { icon: string; link: string; isMail?: boolean }[];
 
-const Footer = () => (
-  <footer className="h-16 flex flex-col justify-center border-t border-t-white backdrop-blur-2xl absolute w-full left-0 bottom-0">
+const Footer = ({ className }: { className?: string }) => (
+  <footer className={`h-16 flex flex-col justify-center border-t border-t-white backdrop-blur-2xl w-full ${className}`}>
     <div className="container mx-auto flex items-center justify-between">
       <div className="flex items-center">
         <Image src="/images/copyright.svg" width={16} height={16} />
