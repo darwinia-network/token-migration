@@ -4,14 +4,15 @@ module.exports = {
   theme: {
     container: {
       padding: {
-        xl: "8rem",
+        xl: "2rem",
         "2xl": "10rem",
       },
     },
-    colors: {
-      primary: "#FF0083",
+    extend: {
+      colors: {
+        primary: "#FF0083",
+      },
     },
-    extend: {},
   },
   plugins: [],
 };
