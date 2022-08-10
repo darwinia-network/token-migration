@@ -10,7 +10,7 @@ const Button = ({ children, className, type, onClick }: PropsWithChildren<Props>
   return (
     <button
       className={`${
-        type === "primary" ? "bg-primary" : "border-primary"
+        type === "primary" ? "bg-primary" : "border-[2px] border-primary"
       } text-sm leading-7 font-light py-2 px-4 ${className}`}
       onClick={onClick}
     >
