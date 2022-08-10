@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import Button from "./button";
+import CoonectToMetaMask from "./connect-metamask";
 import { toShortAddress } from "../utils";
 
 export default () => {
@@ -8,7 +8,6 @@ export default () => {
     <div className="border-[2px] border-primary h-full">
       <div className="bg-primary h-16 flex justify-between items-center px-4">
         <span className="text-xl font-bold">Migrate Now</span>
-
         <div className="flex items-center space-x-2">
           <div className="py-px px-3 bg-black flex items-center">
             <Image src="/images/not-supported.svg" width={20} height={20} />
@@ -23,10 +22,7 @@ export default () => {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center h-full pb-16 space-y-14">
-        <Image src="/images/metamask.svg" width={96} height={86} />
-        <Button type="primary">{`Connect to MetaMask >`}</Button>
-      </div>
+      <CoonectToMetaMask className="h-full pb-16" />
     </div>
   );
 };
