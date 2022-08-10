@@ -25,11 +25,11 @@ const social = [
 ] as { icon: string; link: string; isMail?: boolean }[];
 
 const Footer = () => (
-  <footer className="py-6 border-t border-t-white backdrop-blur-2xl bg-black">
+  <footer className="py-6 border-t border-t-white backdrop-blur-2xl">
     <div className="container mx-auto flex items-center justify-between">
       <div className="flex items-center">
         <Image src="/images/copyright.svg" width={16} height={16} />
-        <span className="ml-px text-white text-sm font-light">2022 Darwinia Network</span>
+        <span className="ml-px text-sm font-light">2022 Darwinia Network</span>
       </div>
       <div className="flex items-center space-x-4">
         {social.map((item) => (

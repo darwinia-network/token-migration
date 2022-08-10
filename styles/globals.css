@@ -44,4 +44,9 @@ a {
   html {
     font-family: "JetBrains Mono", sans-serif;
   }
+
+  body {
+    color: white;
+    background: black;
+  }
 }
