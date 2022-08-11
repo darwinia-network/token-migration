@@ -1,8 +1,12 @@
 import Image from "next/image";
 import { MouseEventHandler, useEffect, useState } from "react";
+import { Contract, BigNumber } from "ethers";
+import { from, Subscription } from "rxjs";
 
 import Button from "./button";
 import { TokenInfo } from "../types";
+import { useApi } from "../hooks/api";
+import ktonAbi from "../abi/ktonABI.json";
 
 interface Props {
   label: string;
@@ -56,18 +60,39 @@ const SelectedItem = ({
 const OptionItem = ({
   iconSrc,
   symbol,
-  balance,
   disable,
   value,
+  contractAddress,
   onSelect,
 }: {
   iconSrc: string;
   symbol: string;
-  balance: string;
   disable?: boolean;
   value: string;
+  contractAddress?: string;
   onSelect: (symbol: string) => void;
 }) => {
+  const { provider, accounts } = useApi();
+  const [balance, setBalance] = useState("0");
+
+  useEffect(() => {
+    let sub$$: Subscription;
+
+    if (contractAddress && provider && accounts?.length) {
+      const contract = new Contract(contractAddress, ktonAbi, provider);
+
+      sub$$ = from(contract.balanceOf(accounts[0]) as Promise<BigNumber>).subscribe((amount) => {
+        setBalance(amount.toString());
+      });
+    }
+
+    return () => {
+      if (sub$$) {
+        sub$$.unsubscribe();
+      }
+    };
+  }, [contractAddress, provider, accounts]);
+
   return (
     <div
       className={`flex items-center justify-between h-16 px-4 hover:bg-gray-900 ${
@@ -129,7 +154,7 @@ const Selector = ({
             iconSrc={item.iconSrc}
             symbol={item.symbol}
             disable={item.disable}
-            balance="0"
+            contractAddress={item.contractAddress}
             onSelect={() => {
               setSelected(index);
               if (onSelect) {
