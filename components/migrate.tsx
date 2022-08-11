@@ -1,5 +1,6 @@
-import { useCallback } from "react";
-import { Contract, utils } from "ethers";
+import { useCallback, useEffect, useState } from "react";
+import { BigNumber, Contract } from "ethers";
+import { Subscription, from } from "rxjs";
 
 import CoonectToMetaMask from "./connect-metamask";
 import Button from "./button";
@@ -12,11 +13,16 @@ import ktonAbi from "../abi/ktonABI.json";
 import migratorAbi from "../abi/migratorABI.json";
 
 const Migrate = () => {
-  const { accounts, provider, migration, setAccounts } = useApi();
+  const { accounts, provider, migration, balances, assetToMigrate, setAccounts } = useApi();
+  const [needApprove, setNeedApprove] = useState(false);
 
   const handleApprove = useCallback(async () => {
-    if (provider && accounts?.length) {
-      // const contract = new Contract('0x8809f9b3ACEF1dA309f49b5Ab97A4C0faA64E6Ae', ktonAbi, provider.getSigner());
+    if (provider && accounts?.length && assetToMigrate && migration?.migratorAddress) {
+      const contract = new Contract(assetToMigrate.from.options.address, ktonAbi, provider.getSigner());
+      await contract.approve(
+        migration.migratorAddress,
+        "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      );
 
       // const balance = await contract.balanceOf(accounts[0]);
       // console.log(utils.formatEther(balance));
@@ -28,16 +34,47 @@ const Migrate = () => {
       // console.log(utils.formatEther(amount));
 
       // migrator contract
-      const contract = new Contract("0xE3F90f6Fe7c70b1F8cBEbc3477048d4F32E61f07", migratorAbi, provider.getSigner());
+      // const contract = new Contract("0xE3F90f6Fe7c70b1F8cBEbc3477048d4F32E61f07", migratorAbi, provider.getSigner());
 
       // const oldKton = await contract.old_wckton();
       // const newKton = await contract.new_wckton();
       // console.log(oldKton, newKton);
 
-      const result = await contract.migrate();
-      console.log(result);
+      // const result = await contract.migrate();
+      // console.log(result);
     }
-  }, [provider, accounts]);
+  }, [provider, accounts, migration, assetToMigrate]);
+
+  const handleMigrate = useCallback(async () => {
+    if (provider && assetToMigrate && migration?.migratorAddress) {
+      const contract = new Contract(migration.migratorAddress, migratorAbi, provider.getSigner());
+      await contract.migrate();
+    }
+  }, [provider, assetToMigrate, migration?.migratorAddress]);
+
+  useEffect(() => {
+    let sub$$: Subscription;
+
+    if (provider && accounts?.length && migration && assetToMigrate && balances) {
+      const contract = new Contract(assetToMigrate.from.options.address, accounts[0], provider);
+
+      sub$$ = from(contract.allowance(accounts[0], migration.migratorAddress) as Promise<BigNumber>).subscribe(
+        (amount) => {
+          if (amount.gt(balances.classic)) {
+            setNeedApprove(false);
+          } else {
+            setNeedApprove(true);
+          }
+        }
+      );
+    }
+
+    return () => {
+      if (sub$$) {
+        sub$$.unsubscribe();
+      }
+    };
+  }, [provider, accounts, migration, assetToMigrate, balances]);
 
   return (
     <div className="border-[2px] border-primary h-full">
@@ -57,9 +94,15 @@ const Migrate = () => {
           <MigrationSelector />
 
           <div className="absolute bottom-5 left-0 w-full px-4">
-            <Button className="w-full" onClick={handleApprove}>
-              Approve
-            </Button>
+            {needApprove ? (
+              <Button className="w-full" onClick={handleApprove}>
+                Approve
+              </Button>
+            ) : (
+              <Button className="w-full" type="primary" onClick={handleMigrate}>
+                Migrate Token
+              </Button>
+            )}
           </div>
         </div>
       ) : (
