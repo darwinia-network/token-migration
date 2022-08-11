@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BigNumber, Contract } from "ethers";
-import { Subscription, from } from "rxjs";
+import { EMPTY, from } from "rxjs";
 
 import { useApi } from "./api";
 import ktonAbi from "../abi/ktonABI.json";
@@ -9,21 +9,23 @@ export const useKtonBalance = (contractAddress?: string | null, account?: string
   const { provider } = useApi();
   const [balance, setBalance] = useState(BigNumber.from(0));
 
-  useEffect(() => {
-    let sub$$: Subscription;
-
+  const getBalance = useCallback(() => {
     if (contractAddress && account && provider) {
       const contract = new Contract(contractAddress, ktonAbi, provider);
 
-      sub$$ = from(contract.balanceOf(account) as Promise<BigNumber>).subscribe(setBalance);
+      return from(contract.balanceOf(account) as Promise<BigNumber>).subscribe(setBalance);
+    } else {
+      setBalance(BigNumber.from(0));
+
+      return EMPTY.subscribe();
     }
+  }, [contractAddress && account && provider]);
 
-    return () => {
-      if (sub$$) {
-        sub$$.unsubscribe();
-      }
-    };
-  }, [contractAddress, account, provider]);
+  useEffect(() => {
+    const sub$$ = getBalance();
 
-  return { balance };
+    return () => sub$$.unsubscribe();
+  }, [getBalance]);
+
+  return { balance, refresh: getBalance };
 };
