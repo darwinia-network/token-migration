@@ -61,7 +61,7 @@ const SelectedItem = ({
       onClick={isForNewToken ? undefined : onClick}
     >
       <div className="flex items-center w-1/3">
-        <Image src={iconSrc} width={30} height={30} />
+        <Image alt="..." src={iconSrc} width={30} height={30} />
         <span className="ml-2 text-sm leading-7 font-light">{symbol}</span>
       </div>
 
@@ -73,7 +73,7 @@ const SelectedItem = ({
         {isForNewToken ? (
           <Button>Add To MetaMask</Button>
         ) : (
-          <Image src="/images/drop-down.svg" width={16} height={16} />
+          <Image alt="..." src="/images/drop-down.svg" width={16} height={16} />
         )}
       </div>
     </div>
@@ -126,7 +126,7 @@ const OptionItem = ({
       onClick={disable ? undefined : () => onSelect(value)}
     >
       <div className="flex items-center w-1/3">
-        <Image src={iconSrc} width={30} height={30} />
+        <Image alt="..." src={iconSrc} width={30} height={30} />
         <span className="ml-2 text-sm leading-7 font-light">{symbol}</span>
       </div>
 

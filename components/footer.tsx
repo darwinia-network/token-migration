@@ -28,7 +28,7 @@ const Footer = ({ className }: { className?: string }) => (
   <footer className={`h-16 flex flex-col justify-center border-t border-t-white backdrop-blur-2xl w-full ${className}`}>
     <div className="container mx-auto flex items-center justify-between">
       <div className="flex items-center">
-        <Image src="/images/copyright.svg" width={16} height={16} />
+        <Image alt="..." src="/images/copyright.svg" width={16} height={16} />
         <span className="ml-px text-sm font-light">2022 Darwinia Network</span>
       </div>
       <div className="flex items-center space-x-4">
@@ -40,7 +40,7 @@ const Footer = ({ className }: { className?: string }) => (
             href={item.isMail ? `mailto:${item.link}` : item.link}
             className="inline-flex"
           >
-            <Image src={item.icon} width={20} height={20} />
+            <Image alt="..." src={item.icon} width={20} height={20} />
           </a>
         ))}
       </div>

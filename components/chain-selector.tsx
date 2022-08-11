@@ -15,9 +15,9 @@ const SelectedItem = ({
 }) => {
   return (
     <div className="py-px px-3 bg-black flex items-center hover:cursor-pointer" onClick={onClick}>
-      <Image src={iconSrc} width={20} height={20} />
+      <Image alt="..." src={iconSrc} width={20} height={20} />
       <span className="mx-2 text-sm leading-7 font-light">{label}</span>
-      <Image src="/images/drop-down.svg" width={16} height={16} />
+      <Image alt="..." src="/images/drop-down.svg" width={16} height={16} />
     </div>
   );
 };
@@ -40,7 +40,7 @@ const OptionItem = ({
       className="flex items-center space-x-3 px-5 py-1 hover:cursor-pointer hover:bg-gray-900"
       onClick={() => onSelect(value)}
     >
-      <Image src={iconSrc} width={30} height={30} />
+      <Image alt="..." src={iconSrc} width={30} height={30} />
       <span className="text-sm leading-7 font-light text-[#C6C6C6] tracking-wide">{label}</span>
       {isTextNet && (
         <div className="bg-primary">
@@ -59,35 +59,38 @@ const ChainSlector = () => {
     document.addEventListener("click", () => setOpen(false));
   }, []);
 
-  const handleSelect = useCallback(async (chainId: string) => {
-    const found = config.find((item) => item.chainParam.chainId === chainId);
+  const handleSelect = useCallback(
+    async (chainId: string) => {
+      const found = config.find((item) => item.chainParam.chainId === chainId);
 
-    try {
-      await window.ethereum.request({
-        method: "wallet_switchEthereumChain",
-        params: [{ chainId }],
-      });
+      try {
+        await window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId }],
+        });
 
-      if (found) {
-        setMigration(found);
-      }
-    } catch (switchError) {
-      // This error code indicates that the chain has not been added to MetaMask.
-      if ((switchError as { code: number }).code === 4902 && found) {
-        try {
-          await window.ethereum.request({
-            method: "wallet_addEthereumChain",
-            params: [{ ...found.chainParam }],
-          });
-
+        if (found) {
           setMigration(found);
-        } catch (addError) {
-          // handle "add" error
         }
+      } catch (switchError) {
+        // This error code indicates that the chain has not been added to MetaMask.
+        if ((switchError as { code: number }).code === 4902 && found) {
+          try {
+            await window.ethereum.request({
+              method: "wallet_addEthereumChain",
+              params: [{ ...found.chainParam }],
+            });
+
+            setMigration(found);
+          } catch (addError) {
+            // handle "add" error
+          }
+        }
+        // handle other "switch" errors
       }
-      // handle other "switch" errors
-    }
-  }, []);
+    },
+    [setMigration]
+  );
 
   return (
     <div className="relative">

@@ -39,12 +39,7 @@ interface AddEthereumChainParameter {
   iconUrls?: string[]; // Currently ignored.
 }
 
-export interface TokenInfo {
-  name: string;
-  symbol: string;
-  decimals: number;
-  iconSrc: string;
-  contractAddress?: string;
+export interface TokenInfo extends WatchAssetParams {
   disable?: boolean;
 }
 

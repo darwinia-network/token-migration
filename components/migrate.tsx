@@ -6,7 +6,7 @@ import MigrationSelector from "./migration-selector";
 
 import { useApi } from "../hooks/api";
 
-export default () => {
+const Migrate = () => {
   const { accounts, provider, migration, setAccounts } = useApi();
 
   return (
@@ -41,3 +41,5 @@ export default () => {
     </div>
   );
 };
+
+export default Migrate;

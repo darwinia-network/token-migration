@@ -13,35 +13,46 @@ export const config = [
     migrations: [
       {
         from: {
-          name: TokenSymbol.XRingClassic,
-          symbol: TokenSymbol.XRingClassic,
-          decimals: 18,
           iconSrc: "/images/x-wring.svg",
+          type: "ERC20",
+          options: {
+            address: "",
+            symbol: TokenSymbol.XRingClassic,
+            decimals: 18,
+          },
           disable: true,
         },
         to: {
-          name: TokenSymbol.XWRing,
-          symbol: TokenSymbol.XWRing,
-          decimals: 18,
           iconSrc: "/images/x-wring.svg",
-          contractAddress: "",
+          type: "ERC20",
+          options: {
+            address: "",
+            symbol: TokenSymbol.XWRing,
+            decimals: 18,
+          },
           disable: true,
         },
       },
       {
         from: {
-          name: TokenSymbol.WCKtonClassic,
-          symbol: TokenSymbol.WCKtonClassic,
-          decimals: 18,
           iconSrc: "/images/ckton.svg",
-          contractAddress: "0x8809f9b3ACEF1dA309f49b5Ab97A4C0faA64E6Ae",
+          type: "ERC20",
+          options: {
+            address: "0x8809f9b3ACEF1dA309f49b5Ab97A4C0faA64E6Ae",
+            symbol: TokenSymbol.WCKtonClassic,
+            decimals: 18,
+          },
+          disable: false,
         },
         to: {
-          name: TokenSymbol.CKton,
-          symbol: TokenSymbol.CKton,
-          decimals: 18,
           iconSrc: "/images/ckton.svg",
-          contractAddress: "0x0000000000000000000000000000000000000402",
+          type: "ERC20",
+          options: {
+            address: "0x0000000000000000000000000000000000000402",
+            symbol: TokenSymbol.CKton,
+            decimals: 18,
+          },
+          disable: false,
         },
       },
     ],
@@ -58,34 +69,44 @@ export const config = [
     migrations: [
       {
         from: {
-          name: TokenSymbol.XORingClassic,
-          symbol: TokenSymbol.XORingClassic,
-          decimals: 18,
           iconSrc: "/images/x-woring.svg",
+          type: "ERC20",
+          options: {
+            address: "",
+            symbol: TokenSymbol.XORingClassic,
+            decimals: 18,
+          },
           disable: true,
         },
         to: {
-          name: TokenSymbol.XWORing,
-          symbol: TokenSymbol.XWORing,
-          decimals: 18,
           iconSrc: "/images/x-woring.svg",
-          contractAddress: "",
+          type: "ERC20",
+          options: {
+            address: "",
+            symbol: TokenSymbol.XWORing,
+            decimals: 18,
+          },
+          disable: true,
         },
       },
       {
         from: {
-          name: TokenSymbol.WPKtonClassic,
-          symbol: TokenSymbol.WPKtonClassic,
-          decimals: 18,
           iconSrc: "/images/pkton.svg",
-          contractAddress: "0x8809f9b3ACEF1dA309f49b5Ab97A4C0faA64E6Ae",
+          type: "ERC20",
+          options: {
+            address: "0x8809f9b3ACEF1dA309f49b5Ab97A4C0faA64E6Ae",
+            symbol: TokenSymbol.WPKtonClassic,
+            decimals: 18,
+          },
         },
         to: {
-          name: TokenSymbol.PKton,
-          symbol: TokenSymbol.PKton,
-          decimals: 18,
           iconSrc: "/images/pkton.svg",
-          contractAddress: "0x0000000000000000000000000000000000000402",
+          type: "ERC20",
+          options: {
+            address: "0x0000000000000000000000000000000000000402",
+            symbol: TokenSymbol.PKton,
+            decimals: 18,
+          },
         },
       },
     ],

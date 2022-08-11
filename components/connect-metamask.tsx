@@ -25,11 +25,11 @@ const CoonectToMetaMask = ({
         accounts,
       });
     }
-  }, []);
+  }, [onConnect]);
 
   return (
     <div className={`flex flex-col justify-center items-center space-y-14 ${className}`} style={style}>
-      <Image src="/images/metamask.svg" width={96} height={86} />
+      <Image alt="..." src="/images/metamask.svg" width={96} height={86} />
       {provider ? (
         <Button type="primary" onClick={handleConnectMetamask}>{`Connect to MetaMask >`}</Button>
       ) : (
