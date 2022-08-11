@@ -13,7 +13,7 @@ export const ApiProvider = ({ children }: PropsWithChildren<{}>) => {
   const [provider, setProvider] = useState<providers.Web3Provider | null>(null);
   const [migration, setMigration] = useState<ConfigData | null>(null);
   const [assetToMigrate, setAssetToMigrate] = useState<AssetToMigrate | null>(null);
-  const [balances, setBalances] = useState<Balances>({ classic: BigNumber.from(0), current: BigNumber.from(0) });
+  const [balances, setBalances] = useState<Balances | null>(null);
 
   const getKtonBalance = useCallback(
     async (contractAddress?: string | null, account?: string | null) => {
@@ -36,7 +36,7 @@ export const ApiProvider = ({ children }: PropsWithChildren<{}>) => {
         setBalances({ classic, current });
       });
     } else {
-      setBalances({ classic: BigNumber.from(0), current: BigNumber.from(0) });
+      setBalances(null);
       return EMPTY.subscribe();
     }
   }, [assetToMigrate, accounts, getKtonBalance]);

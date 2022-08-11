@@ -67,7 +67,7 @@ export interface ApiCtx {
   provider: providers.Web3Provider | null;
   migration: ConfigData | null;
   assetToMigrate: AssetToMigrate | null;
-  balances: Balances;
+  balances: Balances | null;
 
   setAccounts: (_: string[]) => void;
   setMigration: (_: ConfigData) => void;

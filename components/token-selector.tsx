@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MouseEventHandler, useCallback, useEffect, useState } from "react";
-import { utils } from "ethers";
+import { BigNumber, utils } from "ethers";
 
 import Button from "./button";
 import { TokenInfo } from "../types";
@@ -12,6 +12,7 @@ interface Props {
   isForNewToken?: boolean;
   tokens: TokenInfo[];
   defaultValue?: TokenInfo;
+  balance?: BigNumber | null;
   onSelect?: (index: number) => void;
 }
 
@@ -148,12 +149,14 @@ const Selector = ({
   );
 };
 
-const TokenSelector = ({ label, className, isForNewToken, defaultValue, tokens, onSelect }: Props) => {
+const TokenSelector = ({ label, className, isForNewToken, defaultValue, tokens, balance, onSelect }: Props) => {
   return (
     <div className={`flex flex-col ${className}`}>
       <div className="inline-flex items-center justify-between">
         <span className="text-sm leading-7 font-light">{label}</span>
-        <span className="text-sm leading-7 font-light">Balance: --</span>
+        <span className="text-sm leading-7 font-light">
+          Balance: {`${balance ? utils.formatEther(balance) : "--"}`}
+        </span>
       </div>
 
       <Selector isForNewToken={isForNewToken} defaultValue={defaultValue} tokens={tokens} onSelect={onSelect} />
