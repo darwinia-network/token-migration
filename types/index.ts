@@ -1,4 +1,4 @@
-import { providers } from "ethers";
+import { providers, BigNumber } from "ethers";
 
 export enum ChainName {
   CrabSmartChain = "Crab Smart Chain",
@@ -44,22 +44,33 @@ export interface TokenInfo extends WatchAssetParams {
   disable?: boolean;
 }
 
+export interface AssetToMigrate {
+  from: TokenInfo;
+  to: TokenInfo;
+}
+
 export interface ConfigData {
   logoSrc: string;
   chainParam: AddEthereumChainParameter;
-  migrations: {
-    from: TokenInfo;
-    to: TokenInfo;
-  }[];
+  migrations: AssetToMigrate[];
   migratorAddress: string;
   isTextNet?: boolean;
+}
+
+export interface Balances {
+  classic: BigNumber;
+  current: BigNumber;
 }
 
 export interface ApiCtx {
   accounts: string[] | null;
   provider: providers.Web3Provider | null;
   migration: ConfigData | null;
+  assetToMigrate: AssetToMigrate | null;
+  balances: Balances;
 
-  setAccounts: (acs: string[]) => void;
-  setMigration: (cfg: ConfigData) => void;
+  setAccounts: (_: string[]) => void;
+  setMigration: (_: ConfigData) => void;
+  setAssetToMigrate: (_: AssetToMigrate | null) => void;
+  refreshBalances: () => void;
 }
