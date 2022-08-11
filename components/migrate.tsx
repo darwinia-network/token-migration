@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import CoonectToMetaMask from "./connect-metamask";
 import TokenSelector from "./token-selector";
+import Button from "./button";
 import { toShortAddress } from "../utils";
 
 export default () => {
@@ -27,12 +28,16 @@ export default () => {
       </div>
 
       {isConnected ? (
-        <div className="pt-4 pb-2 px-4">
+        <div className="pt-4 px-4 relative" style={{ height: "calc(100% - 4rem)" }}>
           <TokenSelector label="Amount to migrate (Old token)" />
           <TokenSelector label="You receive (New token)" className="mt-5" isForNewToken />
+
+          <div className="absolute bottom-5 left-0 w-full px-4">
+            <Button className="w-full">Approve</Button>
+          </div>
         </div>
       ) : (
-        <CoonectToMetaMask className="h-full pb-16" onClick={() => setIsConnected(true)} />
+        <CoonectToMetaMask style={{ height: "calc(100% - 4rem)" }} onClick={() => setIsConnected(true)} />
       )}
     </div>
   );
