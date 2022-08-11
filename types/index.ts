@@ -45,6 +45,7 @@ export interface ConfigData {
     from: TokenInfo;
     to: TokenInfo;
   }[];
+  migratorAddress: string;
   isTextNet?: boolean;
 }
 

@@ -9,6 +9,7 @@ export const config = [
       rpcUrls: ["https://crab-rpc.darwinia.network/"],
       blockExplorerUrls: ["https://crab.subscan.io/"],
     },
+    migratorAddress: "",
     migrations: [
       {
         from: {
@@ -53,6 +54,7 @@ export const config = [
       rpcUrls: ["https://pangolin-rpc.darwinia.network/"],
       blockExplorerUrls: ["https://pangolin.subscan.io/"],
     },
+    migratorAddress: "0xE3F90f6Fe7c70b1F8cBEbc3477048d4F32E61f07",
     migrations: [
       {
         from: {
