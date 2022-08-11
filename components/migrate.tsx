@@ -14,15 +14,15 @@ export default () => {
       <div className="bg-primary h-16 flex justify-between items-center px-4">
         <span className="text-xl font-bold">Migrate Now</span>
 
-        {accounts.length && provider ? (
+        {accounts?.length && provider ? (
           <div className="flex items-center space-x-2">
             <ChainSlector />
-            <Address value="0xf422673CB7a673f595852f7B00906408A0b073db" />
+            <Address value={accounts[0]} />
           </div>
         ) : null}
       </div>
 
-      {accounts.length && provider ? (
+      {accounts?.length && provider ? (
         <div className={`pt-4 px-4 relative ${migration ? "" : "opacity-50"}`} style={{ height: "calc(100% - 4rem)" }}>
           <TokenSelector label="Amount to migrate (Old token)" />
           <TokenSelector label="You receive (New token)" className="mt-5" isForNewToken />

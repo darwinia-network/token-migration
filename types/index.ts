@@ -49,7 +49,7 @@ export interface ConfigData {
 }
 
 export interface ApiCtx {
-  accounts: string[];
+  accounts: string[] | null;
   provider: providers.Web3Provider | null;
   migration: ConfigData | null;
 

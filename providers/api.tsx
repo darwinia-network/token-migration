@@ -7,7 +7,7 @@ import { config } from "../config";
 export const ApiContext = createContext<ApiCtx>({} as ApiCtx);
 
 export const ApiProvider = ({ children }: PropsWithChildren<{}>) => {
-  const [accounts, setAccounts] = useState<string[]>([]);
+  const [accounts, setAccounts] = useState<string[] | null>(null);
   const [provider, setProvider] = useState<providers.Web3Provider | null>(null);
   const [migration, setMigration] = useState<ConfigData | null>(null);
 
@@ -28,6 +28,20 @@ export const ApiProvider = ({ children }: PropsWithChildren<{}>) => {
       });
     }
   }, []);
+
+  useEffect(() => {
+    if (accounts && provider) {
+      provider.getNetwork().then((network) => {
+        const match = config.find(({ chainParam: { chainId } }) => Number(chainId) === network.chainId);
+
+        if (match) {
+          setMigration(match);
+        } else {
+          setMigration(null);
+        }
+      });
+    }
+  }, [accounts, provider]);
 
   return (
     <ApiContext.Provider value={{ accounts, provider, migration, setAccounts, setMigration }}>
