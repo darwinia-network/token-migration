@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { MouseEventHandler, useCallback, useEffect, useState } from "react";
-import { Contract, BigNumber } from "ethers";
+import { Contract, BigNumber, utils } from "ethers";
 import { from, Subscription } from "rxjs";
 
 import Button from "./button";
@@ -46,7 +46,7 @@ const SelectedItem = ({
       const contract = new Contract(token.options.address, ktonAbi, provider);
 
       sub$$ = from(contract.balanceOf(accounts[0]) as Promise<BigNumber>).subscribe((amount) => {
-        setBalance(amount.toString());
+        setBalance(utils.formatEther(amount));
       });
     } else {
       setBalance("0");
@@ -107,7 +107,7 @@ const OptionItem = ({
       const contract = new Contract(token.options.address, ktonAbi, provider);
 
       sub$$ = from(contract.balanceOf(accounts[0]) as Promise<BigNumber>).subscribe((amount) => {
-        setBalance(amount.toString());
+        setBalance(utils.formatEther(amount));
       });
     } else {
       setBalance("0");
