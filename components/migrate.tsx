@@ -6,7 +6,10 @@ import Button from "./button";
 import ChainSlector from "./chain-selector";
 import Address from "./address";
 
+import { useApi } from "../hooks/api";
+
 export default () => {
+  const { setAccounts, setProvider } = useApi();
   const [isConnected, setIsConnected] = useState(false);
 
   return (
@@ -29,7 +32,14 @@ export default () => {
           </div>
         </div>
       ) : (
-        <CoonectToMetaMask style={{ height: "calc(100% - 4rem)" }} onConnect={() => setIsConnected(true)} />
+        <CoonectToMetaMask
+          style={{ height: "calc(100% - 4rem)" }}
+          onConnect={({ accounts, provider }) => {
+            setAccounts(accounts);
+            setProvider(provider);
+            setIsConnected(true);
+          }}
+        />
       )}
     </div>
   );
