@@ -163,7 +163,7 @@ const Selector = ({
       <SelectedItem
         isForNewToken={isForNewToken}
         iconSrc={tokens[selected]?.iconSrc || defaultValue?.iconSrc || ""}
-        symbol={tokens[selected]?.symbol || defaultValue?.symbol || ""}
+        symbol={tokens[selected]?.options.symbol || defaultValue?.options.symbol || ""}
         onClick={(e) => {
           e.stopPropagation();
           setOpen((prev) => !prev);
@@ -174,11 +174,11 @@ const Selector = ({
         {tokens.map((item, index) => (
           <OptionItem
             key={index}
-            value={item.symbol}
+            value={item.options.symbol}
             iconSrc={item.iconSrc}
-            symbol={item.symbol}
+            symbol={item.options.symbol}
             disable={item.disable}
-            contractAddress={item.contractAddress}
+            contractAddress={item.options.address}
             onSelect={() => {
               setSelected(index);
               if (onSelect) {
