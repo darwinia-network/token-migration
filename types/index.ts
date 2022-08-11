@@ -29,7 +29,7 @@ interface AddEthereumChainParameter {
   iconUrls?: string[]; // Currently ignored.
 }
 
-interface TokenInfo {
+export interface TokenInfo {
   name: string;
   symbol: string;
   decimals: number;

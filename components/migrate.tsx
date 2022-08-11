@@ -1,8 +1,8 @@
 import CoonectToMetaMask from "./connect-metamask";
-import TokenSelector from "./token-selector";
 import Button from "./button";
 import ChainSlector from "./chain-selector";
 import Address from "./address";
+import MigrationSelector from "./migration-selector";
 
 import { useApi } from "../hooks/api";
 
@@ -24,8 +24,7 @@ export default () => {
 
       {accounts?.length && provider ? (
         <div className={`pt-4 px-4 relative ${migration ? "" : "opacity-50"}`} style={{ height: "calc(100% - 4rem)" }}>
-          <TokenSelector label="Amount to migrate (Old token)" />
-          <TokenSelector label="You receive (New token)" className="mt-5" isForNewToken />
+          <MigrationSelector />
 
           <div className="absolute bottom-5 left-0 w-full px-4">
             <Button className="w-full">Approve</Button>

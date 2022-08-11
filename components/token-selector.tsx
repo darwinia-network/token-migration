@@ -2,19 +2,27 @@ import Image from "next/image";
 import { MouseEventHandler, useEffect, useState } from "react";
 
 import Button from "./button";
+import { TokenInfo } from "../types";
 
 interface Props {
   label: string;
   className?: string;
   isForNewToken?: boolean;
+  tokens: TokenInfo[];
 }
 
 const SelectedItem = ({
   isForNewToken,
   onClick,
+  iconSrc,
+  symbol,
+  balance,
 }: {
   isForNewToken?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  iconSrc: string;
+  symbol: string;
+  balance: string;
 }) => {
   return (
     <div
@@ -24,12 +32,12 @@ const SelectedItem = ({
       onClick={isForNewToken ? undefined : onClick}
     >
       <div className="flex items-center w-1/3">
-        <Image src="/images/x-wring.svg" width={30} height={30} />
-        <span className="ml-2 text-sm leading-7 font-light">xRing(Classic)</span>
+        <Image src={iconSrc} width={30} height={30} />
+        <span className="ml-2 text-sm leading-7 font-light">{symbol}</span>
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <span className="text-sm leading-7 font-light">0</span>
+        <span className="text-sm leading-7 font-light">{balance}</span>
       </div>
 
       <div className="w-1/3 flex justify-end">
@@ -43,16 +51,35 @@ const SelectedItem = ({
   );
 };
 
-const OptionItem = () => {
+const OptionItem = ({
+  iconSrc,
+  symbol,
+  balance,
+  disable,
+  value,
+  onSelect,
+}: {
+  iconSrc: string;
+  symbol: string;
+  balance: string;
+  disable?: boolean;
+  value: string;
+  onSelect: (symbol: string) => void;
+}) => {
   return (
-    <div className="flex items-center justify-between h-16 px-4 hover:cursor-pointer hover:bg-gray-900">
+    <div
+      className={`flex items-center justify-between h-16 px-4 hover:bg-gray-900 ${
+        disable ? "hover:cursor-not-allowed" : "hover:cursor-pointer"
+      }`}
+      onClick={disable ? undefined : () => onSelect(value)}
+    >
       <div className="flex items-center w-1/3">
-        <Image src="/images/x-wring.svg" width={30} height={30} />
-        <span className="ml-2 text-sm leading-7 font-light">xRing(Classic)</span>
+        <Image src={iconSrc} width={30} height={30} />
+        <span className="ml-2 text-sm leading-7 font-light">{symbol}</span>
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <span className="text-sm leading-7 font-light">0</span>
+        <span className="text-sm leading-7 font-light">{balance}</span>
       </div>
 
       <div className="w-1/3 invisible"></div>
@@ -60,8 +87,10 @@ const OptionItem = () => {
   );
 };
 
-const Selector = ({ isForNewToken }: { isForNewToken?: boolean }) => {
+const Selector = ({ isForNewToken, tokens }: { isForNewToken?: boolean; tokens: TokenInfo[] }) => {
   const [open, setOpen] = useState(false);
+
+  const [selected, setSelected] = useState(0);
 
   useEffect(() => {
     document.addEventListener("click", () => setOpen(false));
@@ -71,6 +100,9 @@ const Selector = ({ isForNewToken }: { isForNewToken?: boolean }) => {
     <div className="relative">
       <SelectedItem
         isForNewToken={isForNewToken}
+        iconSrc={tokens[selected].iconSrc}
+        symbol={tokens[selected].symbol}
+        balance="0"
         onClick={(e) => {
           e.stopPropagation();
           setOpen((prev) => !prev);
@@ -78,15 +110,23 @@ const Selector = ({ isForNewToken }: { isForNewToken?: boolean }) => {
       />
 
       <div className={`border border-t-0 absolute left-0 w-full bg-black z-10 ${open ? "" : "hidden"}`}>
-        {[1, 2].map((_, index) => (
-          <OptionItem key={index} />
+        {tokens.map((item, index) => (
+          <OptionItem
+            key={index}
+            value={item.symbol}
+            iconSrc={item.iconSrc}
+            symbol={item.symbol}
+            disable={item.disable}
+            balance="0"
+            onSelect={() => setSelected(index)}
+          />
         ))}
       </div>
     </div>
   );
 };
 
-const TokenSelector = ({ label, className, isForNewToken }: Props) => {
+const TokenSelector = ({ label, className, isForNewToken, tokens }: Props) => {
   return (
     <div className={`flex flex-col ${className}`}>
       <div className="inline-flex items-center justify-between">
@@ -94,7 +134,7 @@ const TokenSelector = ({ label, className, isForNewToken }: Props) => {
         <span className="text-sm leading-7 font-light">Balance: --</span>
       </div>
 
-      <Selector isForNewToken={isForNewToken} />
+      <Selector isForNewToken={isForNewToken} tokens={tokens} />
     </div>
   );
 };
