@@ -60,7 +60,7 @@ export const config = [
           symbol: TokenSymbol.XORingClassic,
           decimals: 18,
           iconSrc: "/images/x-woring.svg",
-          disable: true,
+          disable: false,
         },
         to: {
           name: TokenSymbol.XWORing,

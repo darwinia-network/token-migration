@@ -9,6 +9,8 @@ interface Props {
   className?: string;
   isForNewToken?: boolean;
   tokens: TokenInfo[];
+  defaultValue?: TokenInfo;
+  onSelect?: (index: number) => void;
 }
 
 const SelectedItem = ({
@@ -87,7 +89,17 @@ const OptionItem = ({
   );
 };
 
-const Selector = ({ isForNewToken, tokens }: { isForNewToken?: boolean; tokens: TokenInfo[] }) => {
+const Selector = ({
+  isForNewToken,
+  defaultValue,
+  tokens,
+  onSelect,
+}: {
+  isForNewToken?: boolean;
+  defaultValue?: TokenInfo;
+  tokens: TokenInfo[];
+  onSelect?: (index: number) => void;
+}) => {
   const [open, setOpen] = useState(false);
 
   const [selected, setSelected] = useState(0);
@@ -100,8 +112,8 @@ const Selector = ({ isForNewToken, tokens }: { isForNewToken?: boolean; tokens: 
     <div className="relative">
       <SelectedItem
         isForNewToken={isForNewToken}
-        iconSrc={tokens[selected].iconSrc}
-        symbol={tokens[selected].symbol}
+        iconSrc={tokens[selected]?.iconSrc || defaultValue?.iconSrc || ""}
+        symbol={tokens[selected]?.symbol || defaultValue?.symbol || ""}
         balance="0"
         onClick={(e) => {
           e.stopPropagation();
@@ -118,7 +130,12 @@ const Selector = ({ isForNewToken, tokens }: { isForNewToken?: boolean; tokens: 
             symbol={item.symbol}
             disable={item.disable}
             balance="0"
-            onSelect={() => setSelected(index)}
+            onSelect={() => {
+              setSelected(index);
+              if (onSelect) {
+                onSelect(index);
+              }
+            }}
           />
         ))}
       </div>
@@ -126,7 +143,7 @@ const Selector = ({ isForNewToken, tokens }: { isForNewToken?: boolean; tokens: 
   );
 };
 
-const TokenSelector = ({ label, className, isForNewToken, tokens }: Props) => {
+const TokenSelector = ({ label, className, isForNewToken, defaultValue, tokens, onSelect }: Props) => {
   return (
     <div className={`flex flex-col ${className}`}>
       <div className="inline-flex items-center justify-between">
@@ -134,7 +151,7 @@ const TokenSelector = ({ label, className, isForNewToken, tokens }: Props) => {
         <span className="text-sm leading-7 font-light">Balance: --</span>
       </div>
 
-      <Selector isForNewToken={isForNewToken} tokens={tokens} />
+      <Selector isForNewToken={isForNewToken} defaultValue={defaultValue} tokens={tokens} onSelect={onSelect} />
     </div>
   );
 };
