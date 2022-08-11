@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { MouseEventHandler, useEffect, useState } from "react";
 
+import { useApi } from "../hooks/api";
+
 const SelectedItem = ({ onClick }: { onClick?: MouseEventHandler<HTMLDivElement> }) => {
   return (
     <div className="py-px px-3 bg-black flex items-center hover:cursor-pointer" onClick={onClick}>

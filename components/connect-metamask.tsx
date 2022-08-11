@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { CSSProperties, useCallback, useEffect, useState } from "react";
+import { CSSProperties, useCallback } from "react";
 import { providers } from "ethers";
 
 import Button from "./button";
+import { useApi } from "../hooks/api";
 
 const CoonectToMetaMask = ({
   className,
@@ -11,9 +12,9 @@ const CoonectToMetaMask = ({
 }: {
   className?: string;
   style?: CSSProperties;
-  onConnect?: ({}: { provider: providers.Web3Provider; accounts: string[] }) => void;
+  onConnect?: ({}: { accounts: string[] }) => void;
 }) => {
-  const [isInstalled, setIsInstalled] = useState(false);
+  const { provider } = useApi();
 
   const handleConnectMetamask = useCallback(async () => {
     const provider = new providers.Web3Provider(window.ethereum);
@@ -22,23 +23,14 @@ const CoonectToMetaMask = ({
     if (onConnect) {
       onConnect({
         accounts,
-        provider,
       });
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window.ethereum !== "undefined") {
-      setIsInstalled(true);
-    } else {
-      setIsInstalled(false);
     }
   }, []);
 
   return (
     <div className={`flex flex-col justify-center items-center space-y-14 ${className}`} style={style}>
       <Image src="/images/metamask.svg" width={96} height={86} />
-      {isInstalled ? (
+      {provider ? (
         <Button type="primary" onClick={handleConnectMetamask}>{`Connect to MetaMask >`}</Button>
       ) : (
         <a

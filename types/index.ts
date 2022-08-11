@@ -1,11 +1,11 @@
 import { providers } from "ethers";
 
 export interface ApiCtx {
+  isSupported: boolean;
   accounts: string[];
   provider: providers.Web3Provider | undefined;
 
   setAccounts: (acs: string[]) => void;
-  setProvider: (p: providers.Web3Provider) => void;
 }
 
 export enum ChainName {

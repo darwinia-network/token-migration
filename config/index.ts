@@ -4,7 +4,7 @@ export const config = [
   {
     logoSrc: "/images/crab-smart-chain.svg",
     chainParam: {
-      chainId: "44",
+      chainId: "0x2c", // 44
       chainName: ChainName.CrabSmartChain,
       rpcUrls: ["https://crab-rpc.darwinia.network/"],
       blockExplorerUrls: ["https://crab.subscan.io/"],
@@ -48,7 +48,7 @@ export const config = [
   {
     logoSrc: "/images/pangolin-smart.chain.svg",
     chainParam: {
-      chainId: "43",
+      chainId: "0x2b", // 43
       chainName: ChainName.PangolinSmartChain,
       rpcUrls: ["https://pangolin-rpc.darwinia.network/"],
       blockExplorerUrls: ["https://pangolin.subscan.io/"],
