@@ -4,7 +4,7 @@ import CoonectToMetaMask from "./connect-metamask";
 import TokenSelector from "./token-selector";
 import Button from "./button";
 import ChainSlector from "./chain-selector";
-import { toShortAddress } from "../utils";
+import Address from "./address";
 
 export default () => {
   const [isConnected, setIsConnected] = useState(true);
@@ -15,11 +15,7 @@ export default () => {
         <span className="text-xl font-bold">Migrate Now</span>
         <div className="flex items-center space-x-2">
           <ChainSlector />
-          <div className="py-px px-3 bg-black">
-            <span className="text-sm leading-7 font-light">
-              {toShortAddress("0xf422673CB7a673f595852f7B00906408A0b073db")}
-            </span>
-          </div>
+          <Address value="0xf422673CB7a673f595852f7B00906408A0b073db" />
         </div>
       </div>
 
