@@ -1,12 +1,10 @@
 import Image from "next/image";
 import { MouseEventHandler, useCallback, useEffect, useState } from "react";
-import { Contract, BigNumber, utils } from "ethers";
-import { from, Subscription } from "rxjs";
+import { utils } from "ethers";
 
 import Button from "./button";
 import { TokenInfo } from "../types";
-import { useApi } from "../hooks/api";
-import ktonAbi from "../abi/ktonABI.json";
+import { useApi, useKtonBalance } from "../hooks";
 
 interface Props {
   label: string;
@@ -27,7 +25,7 @@ const SelectedItem = ({
   token: TokenInfo;
 }) => {
   const { provider, accounts } = useApi();
-  const [balance, setBalance] = useState("0");
+  const { balance } = useKtonBalance(token.options.address, accounts ? accounts[0] : null);
 
   const handleAddToMetaMask = useCallback(async () => {
     try {
@@ -38,26 +36,6 @@ const SelectedItem = ({
       console.error("Add to MetaMask:", err, token);
     }
   }, [provider, token]);
-
-  useEffect(() => {
-    let sub$$: Subscription;
-
-    if (token.options.address && provider && accounts?.length) {
-      const contract = new Contract(token.options.address, ktonAbi, provider);
-
-      sub$$ = from(contract.balanceOf(accounts[0]) as Promise<BigNumber>).subscribe((amount) => {
-        setBalance(utils.formatEther(amount));
-      });
-    } else {
-      setBalance("0");
-    }
-
-    return () => {
-      if (sub$$) {
-        sub$$.unsubscribe();
-      }
-    };
-  }, [token.options.address, provider, accounts]);
 
   return (
     <div
@@ -72,7 +50,7 @@ const SelectedItem = ({
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <span className="text-sm leading-7 font-light">{balance}</span>
+        <span className="text-sm leading-7 font-light">{utils.formatEther(balance)}</span>
       </div>
 
       <div className="w-1/3 flex justify-end">
@@ -97,28 +75,8 @@ const OptionItem = ({
   token: TokenInfo;
   onSelect: (symbol: string) => void;
 }) => {
-  const { provider, accounts } = useApi();
-  const [balance, setBalance] = useState("0");
-
-  useEffect(() => {
-    let sub$$: Subscription;
-
-    if (token.options.address && provider && accounts?.length) {
-      const contract = new Contract(token.options.address, ktonAbi, provider);
-
-      sub$$ = from(contract.balanceOf(accounts[0]) as Promise<BigNumber>).subscribe((amount) => {
-        setBalance(utils.formatEther(amount));
-      });
-    } else {
-      setBalance("0");
-    }
-
-    return () => {
-      if (sub$$) {
-        sub$$.unsubscribe();
-      }
-    };
-  }, [token.options.address, provider, accounts]);
+  const { accounts } = useApi();
+  const { balance } = useKtonBalance(token.options.address, accounts ? accounts[0] : null);
 
   return (
     <div
@@ -133,7 +91,7 @@ const OptionItem = ({
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <span className="text-sm leading-7 font-light">{balance}</span>
+        <span className="text-sm leading-7 font-light">{utils.formatEther(balance)}</span>
       </div>
 
       <div className="w-1/3 invisible"></div>
