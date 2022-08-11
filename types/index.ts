@@ -1,13 +1,5 @@
 import { providers } from "ethers";
 
-export interface ApiCtx {
-  isSupported: boolean;
-  accounts: string[];
-  provider: providers.Web3Provider | undefined;
-
-  setAccounts: (acs: string[]) => void;
-}
-
 export enum ChainName {
   CrabSmartChain = "Crab Smart Chain",
   PangolinSmartChain = "Pangolin Smart Chain",
@@ -54,4 +46,13 @@ export interface ConfigData {
     to: TokenInfo;
   }[];
   isTextNet?: boolean;
+}
+
+export interface ApiCtx {
+  accounts: string[];
+  provider: providers.Web3Provider | null;
+  migration: ConfigData | null;
+
+  setAccounts: (acs: string[]) => void;
+  setMigration: (cfg: ConfigData) => void;
 }

@@ -7,7 +7,7 @@ import Address from "./address";
 import { useApi } from "../hooks/api";
 
 export default () => {
-  const { accounts, provider, setAccounts } = useApi();
+  const { accounts, provider, migration, setAccounts } = useApi();
 
   return (
     <div className="border-[2px] border-primary h-full">
@@ -23,7 +23,7 @@ export default () => {
       </div>
 
       {accounts.length && provider ? (
-        <div className="pt-4 px-4 relative" style={{ height: "calc(100% - 4rem)" }}>
+        <div className={`pt-4 px-4 relative ${migration ? "" : "opacity-50"}`} style={{ height: "calc(100% - 4rem)" }}>
           <TokenSelector label="Amount to migrate (Old token)" />
           <TokenSelector label="You receive (New token)" className="mt-5" isForNewToken />
 

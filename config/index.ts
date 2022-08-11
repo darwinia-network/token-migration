@@ -46,7 +46,7 @@ export const config = [
     ],
   },
   {
-    logoSrc: "/images/pangolin-smart.chain.svg",
+    logoSrc: "/images/pangolin-smart-chain.svg",
     chainParam: {
       chainId: "0x2b", // 43
       chainName: ChainName.PangolinSmartChain,
