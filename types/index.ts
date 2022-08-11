@@ -1,3 +1,13 @@
+import { providers } from "ethers";
+
+export interface ApiCtx {
+  accounts: string[];
+  provider: providers.Web3Provider | undefined;
+
+  setAccounts: (acs: string[]) => void;
+  setProvider: (p: providers.Web3Provider) => void;
+}
+
 export enum ChainName {
   CrabSmartChain = "Crab Smart Chain",
   PangolinSmartChain = "Pangolin Smart Chain",

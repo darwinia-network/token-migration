@@ -29,7 +29,7 @@ export default () => {
           </div>
         </div>
       ) : (
-        <CoonectToMetaMask style={{ height: "calc(100% - 4rem)" }} onClick={() => setIsConnected(true)} />
+        <CoonectToMetaMask style={{ height: "calc(100% - 4rem)" }} onConnect={() => setIsConnected(true)} />
       )}
     </div>
   );

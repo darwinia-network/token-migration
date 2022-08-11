@@ -1,22 +1,45 @@
 import Image from "next/image";
-import { CSSProperties } from "react";
+import { CSSProperties, useCallback, useEffect, useState } from "react";
+import { providers } from "ethers";
 
 import Button from "./button";
 
 const CoonectToMetaMask = ({
   className,
   style,
-  onClick,
+  onConnect,
 }: {
   className?: string;
   style?: CSSProperties;
-  onClick?: () => void;
+  onConnect?: ({}: { provider: providers.Web3Provider; accounts: string[] }) => void;
 }) => {
+  const [isInstalled, setIsInstalled] = useState(false);
+
+  const handleConnectMetamask = useCallback(async () => {
+    const provider = new providers.Web3Provider(window.ethereum);
+    const accounts = await provider.send("eth_requestAccounts", []);
+
+    if (onConnect) {
+      onConnect({
+        accounts,
+        provider,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window.ethereum !== "undefined") {
+      setIsInstalled(true);
+    } else {
+      setIsInstalled(false);
+    }
+  }, []);
+
   return (
     <div className={`flex flex-col justify-center items-center space-y-14 ${className}`} style={style}>
       <Image src="/images/metamask.svg" width={96} height={86} />
-      {typeof window.ethereum !== "undefined" ? (
-        <Button type="primary" onClick={onClick}>{`Connect to MetaMask >`}</Button>
+      {isInstalled ? (
+        <Button type="primary" onClick={handleConnectMetamask}>{`Connect to MetaMask >`}</Button>
       ) : (
         <a
           href="https://metamask.io/"
