@@ -32,8 +32,9 @@ const Footer = ({ className }: { className?: string }) => (
         <span className="ml-px text-sm font-light">2022 Darwinia Network</span>
       </div>
       <div className="flex items-center space-x-4">
-        {social.map((item) => (
+        {social.map((item, index) => (
           <a
+            key={index}
             target="_blank"
             rel="noopener noreferrer"
             href={item.isMail ? `mailto:${item.link}` : item.link}
