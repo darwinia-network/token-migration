@@ -22,14 +22,37 @@ const SelectedItem = ({
   onClick,
   iconSrc,
   symbol,
-  balance,
+  contractAddress,
 }: {
   isForNewToken?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
   iconSrc: string;
   symbol: string;
-  balance: string;
+  contractAddress?: string;
 }) => {
+  const { provider, accounts } = useApi();
+  const [balance, setBalance] = useState("0");
+
+  useEffect(() => {
+    let sub$$: Subscription;
+
+    if (contractAddress && provider && accounts?.length) {
+      const contract = new Contract(contractAddress, ktonAbi, provider);
+
+      sub$$ = from(contract.balanceOf(accounts[0]) as Promise<BigNumber>).subscribe((amount) => {
+        setBalance(amount.toString());
+      });
+    } else {
+      setBalance("0");
+    }
+
+    return () => {
+      if (sub$$) {
+        sub$$.unsubscribe();
+      }
+    };
+  }, [contractAddress, provider, accounts]);
+
   return (
     <div
       className={`mt-2 flex items-center justify-between border backdrop-blur-2xl h-16 px-4 ${
@@ -84,6 +107,8 @@ const OptionItem = ({
       sub$$ = from(contract.balanceOf(accounts[0]) as Promise<BigNumber>).subscribe((amount) => {
         setBalance(amount.toString());
       });
+    } else {
+      setBalance("0");
     }
 
     return () => {
@@ -139,7 +164,6 @@ const Selector = ({
         isForNewToken={isForNewToken}
         iconSrc={tokens[selected]?.iconSrc || defaultValue?.iconSrc || ""}
         symbol={tokens[selected]?.symbol || defaultValue?.symbol || ""}
-        balance="0"
         onClick={(e) => {
           e.stopPropagation();
           setOpen((prev) => !prev);
