@@ -99,7 +99,7 @@ const Migrate = () => {
                 Approve
               </Button>
             ) : (
-              <Button className="w-full" type="primary" onClick={handleMigrate}>
+              <Button className="w-full" type="primary" disable={balances?.classic.isZero()} onClick={handleMigrate}>
                 Migrate Token
               </Button>
             )}
