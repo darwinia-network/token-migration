@@ -40,6 +40,7 @@ interface AddEthereumChainParameter {
 }
 
 export interface TokenInfo extends WatchAssetParams {
+  iconSrc: string;
   disable?: boolean;
 }
 
