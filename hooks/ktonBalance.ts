@@ -5,7 +5,7 @@ import { Subscription, from } from "rxjs";
 import { useApi } from "./api";
 import ktonAbi from "../abi/ktonABI.json";
 
-export const useKtonBalance = (contractAddress: string, account: string) => {
+export const useKtonBalance = (contractAddress?: string | null, account?: string | null) => {
   const { provider } = useApi();
   const [balance, setBalance] = useState(BigNumber.from(0));
 
