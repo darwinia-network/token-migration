@@ -37,7 +37,7 @@ const SelectedItem = ({
     } catch (err) {
       console.error("Add to MetaMask:", err, token);
     }
-  }, [provider, token.options]);
+  }, [provider, token]);
 
   useEffect(() => {
     let sub$$: Subscription;
