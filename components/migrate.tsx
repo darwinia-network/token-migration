@@ -7,7 +7,7 @@ import ChainSlector from "./chain-selector";
 import Address from "./address";
 
 export default () => {
-  const [isConnected, setIsConnected] = useState(true);
+  const [isConnected, setIsConnected] = useState(false);
 
   return (
     <div className="border-[2px] border-primary h-full">
