@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { MouseEventHandler, useEffect, useState } from "react";
+import { MouseEventHandler, useCallback, useEffect, useState } from "react";
 import { Contract, BigNumber } from "ethers";
 import { from, Subscription } from "rxjs";
 
@@ -20,24 +20,30 @@ interface Props {
 const SelectedItem = ({
   isForNewToken,
   onClick,
-  iconSrc,
-  symbol,
-  contractAddress,
+  token,
 }: {
   isForNewToken?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
-  iconSrc: string;
-  symbol: string;
-  contractAddress?: string;
+  token: TokenInfo;
 }) => {
   const { provider, accounts } = useApi();
   const [balance, setBalance] = useState("0");
 
+  const handleAddToMetaMask = useCallback(async () => {
+    try {
+      if (provider && token.options.address) {
+        await provider.send("wallet_watchAsset", { type: token.type, options: { ...token.options } } as any);
+      }
+    } catch (err) {
+      console.error("Add to MetaMask:", err, token);
+    }
+  }, [provider, token.options]);
+
   useEffect(() => {
     let sub$$: Subscription;
 
-    if (contractAddress && provider && accounts?.length) {
-      const contract = new Contract(contractAddress, ktonAbi, provider);
+    if (token.options.address && provider && accounts?.length) {
+      const contract = new Contract(token.options.address, ktonAbi, provider);
 
       sub$$ = from(contract.balanceOf(accounts[0]) as Promise<BigNumber>).subscribe((amount) => {
         setBalance(amount.toString());
@@ -51,7 +57,7 @@ const SelectedItem = ({
         sub$$.unsubscribe();
       }
     };
-  }, [contractAddress, provider, accounts]);
+  }, [token.options.address, provider, accounts]);
 
   return (
     <div
@@ -61,8 +67,8 @@ const SelectedItem = ({
       onClick={isForNewToken ? undefined : onClick}
     >
       <div className="flex items-center w-1/3">
-        <Image alt="..." src={iconSrc} width={30} height={30} />
-        <span className="ml-2 text-sm leading-7 font-light">{symbol}</span>
+        <Image alt="..." src={token.iconSrc} width={30} height={30} />
+        <span className="ml-2 text-sm leading-7 font-light">{token.options.symbol}</span>
       </div>
 
       <div className="w-1/3 flex justify-center">
@@ -71,7 +77,9 @@ const SelectedItem = ({
 
       <div className="w-1/3 flex justify-end">
         {isForNewToken ? (
-          <Button>Add To MetaMask</Button>
+          <Button onClick={handleAddToMetaMask} disable={!token.options.address || token.disable}>
+            Add To MetaMask
+          </Button>
         ) : (
           <Image alt="..." src="/images/drop-down.svg" width={16} height={16} />
         )}
@@ -81,18 +89,12 @@ const SelectedItem = ({
 };
 
 const OptionItem = ({
-  iconSrc,
-  symbol,
-  disable,
   value,
-  contractAddress,
+  token,
   onSelect,
 }: {
-  iconSrc: string;
-  symbol: string;
-  disable?: boolean;
   value: string;
-  contractAddress?: string;
+  token: TokenInfo;
   onSelect: (symbol: string) => void;
 }) => {
   const { provider, accounts } = useApi();
@@ -101,8 +103,8 @@ const OptionItem = ({
   useEffect(() => {
     let sub$$: Subscription;
 
-    if (contractAddress && provider && accounts?.length) {
-      const contract = new Contract(contractAddress, ktonAbi, provider);
+    if (token.options.address && provider && accounts?.length) {
+      const contract = new Contract(token.options.address, ktonAbi, provider);
 
       sub$$ = from(contract.balanceOf(accounts[0]) as Promise<BigNumber>).subscribe((amount) => {
         setBalance(amount.toString());
@@ -116,18 +118,18 @@ const OptionItem = ({
         sub$$.unsubscribe();
       }
     };
-  }, [contractAddress, provider, accounts]);
+  }, [token.options.address, provider, accounts]);
 
   return (
     <div
       className={`flex items-center justify-between h-16 px-4 hover:bg-gray-900 ${
-        disable ? "opacity-50 hover:cursor-not-allowed" : "hover:cursor-pointer"
+        token.disable ? "opacity-50 hover:cursor-not-allowed" : "hover:cursor-pointer"
       }`}
-      onClick={disable ? undefined : () => onSelect(value)}
+      onClick={token.disable ? undefined : () => onSelect(value)}
     >
       <div className="flex items-center w-1/3">
-        <Image alt="..." src={iconSrc} width={30} height={30} />
-        <span className="ml-2 text-sm leading-7 font-light">{symbol}</span>
+        <Image alt="..." src={token.iconSrc} width={30} height={30} />
+        <span className="ml-2 text-sm leading-7 font-light">{token.options.symbol}</span>
       </div>
 
       <div className="w-1/3 flex justify-center">
@@ -162,8 +164,7 @@ const Selector = ({
     <div className="relative">
       <SelectedItem
         isForNewToken={isForNewToken}
-        iconSrc={tokens[selected]?.iconSrc || defaultValue?.iconSrc || ""}
-        symbol={tokens[selected]?.options.symbol || defaultValue?.options.symbol || ""}
+        token={tokens[selected] || defaultValue}
         onClick={(e) => {
           e.stopPropagation();
           setOpen((prev) => !prev);
@@ -171,14 +172,11 @@ const Selector = ({
       />
 
       <div className={`border border-t-0 absolute left-0 w-full bg-black z-10 ${open ? "" : "hidden"}`}>
-        {tokens.map((item, index) => (
+        {tokens.map((token, index) => (
           <OptionItem
             key={index}
-            value={item.options.symbol}
-            iconSrc={item.iconSrc}
-            symbol={item.options.symbol}
-            disable={item.disable}
-            contractAddress={item.options.address}
+            token={token}
+            value={token.options.symbol}
             onSelect={() => {
               setSelected(index);
               if (onSelect) {
