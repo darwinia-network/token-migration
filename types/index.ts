@@ -13,7 +13,7 @@ export enum ChainName {
   PangolinSmartChain = "Pangolin Smart Chain",
 }
 
-export enum TokenName {
+export enum TokenSymbol {
   XWRing = "xWRING",
   XWORing = "xWORING",
   CKton = "CKTON",
@@ -22,4 +22,36 @@ export enum TokenName {
   XORingClassic = "xORING(Classic)",
   WCKtonClassic = "WCKTON(Classic)",
   WPKtonClassic = "WPKTON(Classic)",
+}
+
+interface AddEthereumChainParameter {
+  chainId: string; // A 0x-prefixed hexadecimal string
+  chainName: string;
+  nativeCurrency?: {
+    name: string;
+    symbol: string; // 2-6 characters long
+    decimals: 18;
+  };
+  rpcUrls: string[];
+  blockExplorerUrls?: string[];
+  iconUrls?: string[]; // Currently ignored.
+}
+
+interface TokenInfo {
+  name: string;
+  symbol: string;
+  decimals: number;
+  iconSrc: string;
+  contractAddress?: string;
+  disable?: boolean;
+}
+
+export interface ConfigData {
+  logoSrc: string;
+  chainParam: AddEthereumChainParameter;
+  migrations: {
+    from: TokenInfo;
+    to: TokenInfo;
+  }[];
+  isTextNet?: boolean;
 }
