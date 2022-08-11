@@ -77,7 +77,7 @@ const Selector = ({ isForNewToken }: { isForNewToken?: boolean }) => {
         }}
       />
 
-      <div className={`border border-t-0 absolute top-[4.5rem] left-0 w-full bg-black z-10 ${open ? "" : "hidden"}`}>
+      <div className={`border border-t-0 absolute left-0 w-full bg-black z-10 ${open ? "" : "hidden"}`}>
         {[1, 2].map((_, index) => (
           <OptionItem key={index} />
         ))}
