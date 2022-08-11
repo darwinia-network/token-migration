@@ -33,7 +33,7 @@
     "typescript": "4.7.4"
   },
   "lint-staged": {
-    "**/*.{ts,tsx}": "next lint",
+    "**/*.{ts,tsx}": "yarn lint",
     "**/*.{js,jsx,ts,tsx,json}": "prettier --write --ignore-unknown",
     "**/*.{css,scss,less}": "stylelint --fix"
   }
