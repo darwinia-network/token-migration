@@ -69,7 +69,7 @@ const OptionItem = ({
   return (
     <div
       className={`flex items-center justify-between h-16 px-4 hover:bg-gray-900 ${
-        disable ? "hover:cursor-not-allowed" : "hover:cursor-pointer"
+        disable ? "opacity-50 hover:cursor-not-allowed" : "hover:cursor-pointer"
       }`}
       onClick={disable ? undefined : () => onSelect(value)}
     >
