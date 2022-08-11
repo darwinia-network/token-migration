@@ -7,7 +7,7 @@ import Button from "./button";
 import { toShortAddress } from "../utils";
 
 export default () => {
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnected, setIsConnected] = useState(true);
 
   return (
     <div className="border-[2px] border-primary h-full">
