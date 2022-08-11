@@ -31,10 +31,5 @@
     "stylelint-config-standard": "^26.0.0",
     "tailwindcss": "^3.1.8",
     "typescript": "4.7.4"
-  },
-  "lint-staged": {
-    "**/*.{ts,tsx}": "yarn lint",
-    "**/*.{js,jsx,ts,tsx,json}": "prettier --write --ignore-unknown",
-    "**/*.{css,scss,less}": "stylelint --fix"
   }
 }
