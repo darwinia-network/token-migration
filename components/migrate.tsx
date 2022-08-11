@@ -56,7 +56,7 @@ const Migrate = () => {
     let sub$$: Subscription;
 
     if (provider && accounts?.length && migration && assetToMigrate && balances) {
-      const contract = new Contract(assetToMigrate.from.options.address, accounts[0], provider);
+      const contract = new Contract(assetToMigrate.from.options.address, ktonAbi, provider);
 
       sub$$ = from(contract.allowance(accounts[0], migration.migratorAddress) as Promise<BigNumber>).subscribe(
         (amount) => {
