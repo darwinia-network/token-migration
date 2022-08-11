@@ -13,6 +13,7 @@ interface Props {
   tokens: TokenInfo[];
   defaultValue?: TokenInfo;
   balance?: BigNumber | null;
+  receive?: BigNumber | null;
   onSelect?: (index: number) => void;
 }
 
@@ -20,10 +21,12 @@ const SelectedItem = ({
   isForNewToken,
   onClick,
   token,
+  receive,
 }: {
   isForNewToken?: boolean;
   onClick?: MouseEventHandler<HTMLDivElement>;
   token: TokenInfo;
+  receive?: BigNumber | null;
 }) => {
   const { provider, accounts } = useApi();
   const { balance } = useKtonBalance(token.options.address, accounts ? accounts[0] : null);
@@ -51,7 +54,7 @@ const SelectedItem = ({
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <span className="text-sm leading-7 font-light">{utils.formatEther(balance)}</span>
+        <span className="text-sm leading-7 font-light">{utils.formatEther(receive ?? balance)}</span>
       </div>
 
       <div className="w-1/3 flex justify-end">
@@ -104,11 +107,13 @@ const Selector = ({
   isForNewToken,
   defaultValue,
   tokens,
+  receive,
   onSelect,
 }: {
   isForNewToken?: boolean;
   defaultValue?: TokenInfo;
   tokens: TokenInfo[];
+  receive?: BigNumber | null;
   onSelect?: (index: number) => void;
 }) => {
   const [open, setOpen] = useState(false);
@@ -122,6 +127,7 @@ const Selector = ({
   return (
     <div className="relative">
       <SelectedItem
+        receive={receive}
         isForNewToken={isForNewToken}
         token={tokens[selected] || defaultValue}
         onClick={(e) => {
@@ -149,7 +155,16 @@ const Selector = ({
   );
 };
 
-const TokenSelector = ({ label, className, isForNewToken, defaultValue, tokens, balance, onSelect }: Props) => {
+const TokenSelector = ({
+  label,
+  className,
+  isForNewToken,
+  defaultValue,
+  tokens,
+  balance,
+  receive,
+  onSelect,
+}: Props) => {
   return (
     <div className={`flex flex-col ${className}`}>
       <div className="inline-flex items-center justify-between">
@@ -159,7 +174,13 @@ const TokenSelector = ({ label, className, isForNewToken, defaultValue, tokens, 
         </span>
       </div>
 
-      <Selector isForNewToken={isForNewToken} defaultValue={defaultValue} tokens={tokens} onSelect={onSelect} />
+      <Selector
+        isForNewToken={isForNewToken}
+        defaultValue={defaultValue}
+        tokens={tokens}
+        receive={receive}
+        onSelect={onSelect}
+      />
     </div>
   );
 };

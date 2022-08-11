@@ -30,6 +30,7 @@ const MigrationSelector = () => {
         isForNewToken
         defaultValue={migration.migrations.map((item) => item.to)[selected]}
         balance={balances?.current}
+        receive={balances?.classic}
         tokens={[]}
       />
     </>
