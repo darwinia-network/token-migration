@@ -99,7 +99,12 @@ const Migrate = () => {
                 Approve
               </Button>
             ) : (
-              <Button className="w-full" type="primary" disable={balances?.classic.isZero()} onClick={handleMigrate}>
+              <Button
+                className="w-full"
+                type="primary"
+                disable={!balances?.classic.gt(BigNumber.from(0))}
+                onClick={handleMigrate}
+              >
                 Migrate Token
               </Button>
             )}
