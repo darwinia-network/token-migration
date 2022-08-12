@@ -14,7 +14,7 @@ const SelectedItem = ({
   onClick?: MouseEventHandler<HTMLDivElement>;
 }) => {
   return (
-    <div className="py-px px-3 bg-black flex items-center hover:cursor-pointer" onClick={onClick}>
+    <div className="py-px px-3 bg-black flex items-center hover:cursor-pointer hover:opacity-80" onClick={onClick}>
       <Image alt="..." src={iconSrc} width={20} height={20} />
       <span className="mx-2 text-sm leading-7 font-light">{label}</span>
       <Image alt="..." src="/images/drop-down.svg" width={16} height={16} />

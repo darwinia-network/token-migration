@@ -44,7 +44,7 @@ const SelectedItem = ({
   return (
     <div
       className={`mt-2 flex items-center justify-between border backdrop-blur-2xl h-16 px-4 ${
-        isForNewToken ? "cursor-not-allowed" : "hover:cursor-pointer"
+        isForNewToken ? "" : "hover:opacity-80 hover:cursor-pointer"
       }`}
       onClick={isForNewToken ? undefined : onClick}
     >
