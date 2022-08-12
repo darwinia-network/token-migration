@@ -61,16 +61,3 @@ export interface Balances {
   classic: BigNumber;
   current: BigNumber;
 }
-
-export interface ApiCtx {
-  accounts: string[] | null;
-  provider: providers.Web3Provider | null;
-  migration: ConfigData | null;
-  assetToMigrate: AssetToMigrate | null;
-  balances: Balances | null;
-
-  setAccounts: (_: string[]) => void;
-  setMigration: (_: ConfigData) => void;
-  setAssetToMigrate: (_: AssetToMigrate | null) => void;
-  refreshBalances: () => void;
-}

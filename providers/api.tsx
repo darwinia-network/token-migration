@@ -2,9 +2,22 @@ import { createContext, PropsWithChildren, useCallback, useEffect, useState } fr
 import { BigNumber, Contract, providers } from "ethers";
 import { EMPTY, forkJoin } from "rxjs";
 
-import type { ApiCtx, ConfigData, AssetToMigrate, Balances } from "../types";
+import type { ConfigData, AssetToMigrate, Balances } from "../types";
 import { config } from "../config";
 import ktonAbi from "../abi/ktonABI.json";
+
+export interface ApiCtx {
+  accounts: string[] | null;
+  provider: providers.Web3Provider | null;
+  migration: ConfigData | null;
+  assetToMigrate: AssetToMigrate | null;
+  balances: Balances | null;
+
+  setAccounts: (_: string[]) => void;
+  setMigration: (_: ConfigData) => void;
+  setAssetToMigrate: (_: AssetToMigrate | null) => void;
+  refreshBalances: () => void;
+}
 
 export const ApiContext = createContext<ApiCtx>({} as ApiCtx);
 
