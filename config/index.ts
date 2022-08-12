@@ -56,6 +56,7 @@ export const config = [
         },
       },
     ],
+    disable: true,
   },
   {
     logoSrc: "/images/pangolin-smart-chain.svg",

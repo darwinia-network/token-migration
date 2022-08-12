@@ -27,18 +27,22 @@ const OptionItem = ({
   label,
   isTextNet,
   value,
+  disable,
   onSelect,
 }: {
   iconSrc: string;
   label: string;
   isTextNet?: boolean;
   value: string;
+  disable?: boolean;
   onSelect: (v: string) => void;
 }) => {
   return (
     <div
-      className="flex items-center space-x-3 px-5 py-1 hover:cursor-pointer hover:bg-gray-900"
-      onClick={() => onSelect(value)}
+      className={`flex items-center space-x-3 px-5 py-1 hover:bg-gray-900 ${
+        disable ? "opacity-50 cursor-not-allowed" : "hover:cursor-pointer"
+      }`}
+      onClick={disable ? undefined : () => onSelect(value)}
     >
       <Image alt="..." src={iconSrc} width={30} height={30} />
       <span className="text-sm leading-7 font-light text-[#C6C6C6] tracking-wide">{label}</span>
@@ -115,6 +119,7 @@ const ChainSlector = () => {
             value={item.chainParam.chainId}
             label={item.chainParam.chainName}
             isTextNet={item.isTextNet}
+            disable={item.disable}
             onSelect={handleSelect}
           />
         ))}

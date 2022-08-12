@@ -1,4 +1,4 @@
-import { providers, BigNumber } from "ethers";
+import { BigNumber } from "ethers";
 
 export enum ChainName {
   CrabSmartChain = "Crab Smart Chain",
@@ -55,6 +55,7 @@ export interface ConfigData {
   migrations: AssetToMigrate[];
   migratorAddress: string;
   isTextNet?: boolean;
+  disable?: boolean;
 }
 
 export interface Balances {
