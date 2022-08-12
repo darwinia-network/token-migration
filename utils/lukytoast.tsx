@@ -5,12 +5,12 @@ import type { ToastQueue } from "../types";
 import { LukyToastContainer } from "../components/LukyToastContainer";
 
 const dispatchToast = (toast: ToastQueue) => {
-  if (window.LukyToastContainerDom) {
-    window.LukyToastAdd(toast);
+  if (window.LukyToast?.containerDom && window.LukyToast.add) {
+    window.LukyToast.add(toast);
   } else {
     const containerDom = document.createElement("div");
     document.body.appendChild(containerDom);
-    window.LukyToastContainerDom = containerDom;
+    window.LukyToast = { ...window.LukyToast, containerDom };
     ReactDom.createRoot(containerDom).render(<LukyToastContainer toast={toast} />);
   }
 };

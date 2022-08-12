@@ -5,8 +5,8 @@ export const useToastQueue = () => {
   const [queue, setQueue] = useState<ToastQueue[]>([]);
 
   const getName = () => {
-    const id = window.LukyToastId || 0;
-    window.LukyToastId = id + 1;
+    const id = window.LukyToast?.tid || 0;
+    window.LukyToast = { ...window.LukyToast, tid: id + 1 };
     return `__toast_id_${id}`;
   };
 
@@ -20,7 +20,7 @@ export const useToastQueue = () => {
     }, toast.duration);
   };
 
-  window.LukyToastAdd = add;
+  window.LukyToast = { ...window.LukyToast, add };
 
   return { queue };
 };

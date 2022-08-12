@@ -6,8 +6,8 @@ export const LukyToastContainer = ({ toast }: { toast?: ToastQueue }) => {
   const { queue } = useToastQueue();
 
   useEffect(() => {
-    if (toast) {
-      window.LukyToastAdd(toast);
+    if (toast && window.LukyToast?.add) {
+      window.LukyToast.add(toast);
     }
   }, [toast]);
 
