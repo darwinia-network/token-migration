@@ -46,7 +46,6 @@ export const ApiProvider = ({ children }: PropsWithChildren<{}>) => {
           ? getKtonBalance(provider, tokenNew.options.address, accounts[0])
           : Promise.resolve(BigNumber.from(-1)),
       ]).subscribe(([amountOld, amountNew]) => {
-        console.log(amountOld.toString());
         setBalance({
           oldToken: amountOld.isNegative() ? null : amountOld,
           newToken: amountNew.isNegative() ? null : amountNew,
