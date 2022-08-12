@@ -8,7 +8,7 @@ import { ChainSlector } from "./ChainSelector";
 import { LukyAddress } from "./LukyAddress";
 import { MigratorSelector } from "./MigratorSelector";
 
-import { approveKton, migrateKton, allowanceKton } from "../utils/common";
+import { approveKton, migrateKton, allowanceKton } from "../utils";
 import { useApi } from "../hooks";
 import { MIGRATORS_CONF, TOKENS_CONF, CHAINS_CONF } from "../config";
 import { ChainID } from "../types";
