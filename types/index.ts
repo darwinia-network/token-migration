@@ -5,6 +5,11 @@ export enum ChainName {
   PangolinSmartChain = "Pangolin Smart Chain",
 }
 
+export enum ChainID {
+  CrabSmartChain = 44,
+  PangolinSmartChain = 43,
+}
+
 export enum TokenSymbol {
   XWRing = "xWRING",
   XWORing = "xWORING",
