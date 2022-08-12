@@ -24,7 +24,7 @@ const social = [
   },
 ] as { icon: string; link: string; isMail?: boolean }[];
 
-const Footer = ({ className }: { className?: string }) => (
+export const PageFooter = ({ className }: { className?: string }) => (
   <footer className={`h-16 flex flex-col justify-center border-t border-t-white backdrop-blur-2xl w-full ${className}`}>
     <div className="container mx-auto flex items-center justify-between">
       <div className="flex items-center">
@@ -47,5 +47,3 @@ const Footer = ({ className }: { className?: string }) => (
     </div>
   </footer>
 );
-
-export default Footer;

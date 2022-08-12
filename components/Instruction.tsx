@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const Instructions = ({ classname }: { classname?: string }) => (
+export const Instruction = ({ classname }: { classname?: string }) => (
   <div className={`flex flex-col items-start justify-start ${classname}`}>
     <Image alt="..." src="/images/migration.svg" width={100} height={100} />
     <h2 className="text-5xl font-medium backdrop-blur-2xl my-5">Token Migration</h2>
@@ -9,5 +9,3 @@ const Instructions = ({ classname }: { classname?: string }) => (
     <p className="text-[##C6C6C6] text-sm leading-8 tracking-wide font-light mt-1 mb-2">{`You can use the app on the left to migrate the two tokens.`}</p>
   </div>
 );
-
-export default Instructions;

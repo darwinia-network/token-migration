@@ -7,7 +7,7 @@ interface Props {
   disable?: boolean;
 }
 
-const Button = ({ children, className, type, disable, onClick }: PropsWithChildren<Props>) => {
+export const LukyButton = ({ children, className, type, disable, onClick }: PropsWithChildren<Props>) => {
   return (
     <button
       className={`${type === "primary" ? "bg-primary" : "border-[2px] border-primary"} ${
@@ -20,5 +20,3 @@ const Button = ({ children, className, type, disable, onClick }: PropsWithChildr
     </button>
   );
 };
-
-export default Button;

@@ -11,7 +11,7 @@ const navData = [
   },
 ] as { text: string; link: string }[];
 
-const Header = ({ className }: { className?: string }) => (
+export const PageHeader = ({ className }: { className?: string }) => (
   <header className={`h-16 flex flex-col justify-center w-full ${className}`}>
     <div className="container mx-auto flex items-center justify-between">
       <Image alt="..." src="/images/logo.svg" width={178} height={22} />
@@ -31,5 +31,3 @@ const Header = ({ className }: { className?: string }) => (
     </div>
   </header>
 );
-
-export default Header;
