@@ -1,4 +1,4 @@
-import { toShortAddress } from "../utils";
+import { toShortAddress } from "../utils/common";
 
 export const LukyAddress = ({ value }: { value: string }) => (
   <div className="py-px px-3 bg-black">

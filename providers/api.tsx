@@ -2,7 +2,7 @@ import { createContext, PropsWithChildren, useCallback, useEffect, useState } fr
 import { BigNumber, providers } from "ethers";
 import { Subscription, EMPTY, forkJoin, from } from "rxjs";
 
-import { getKtonBalance } from "../utils";
+import { getKtonBalance } from "../utils/common";
 import { ChainID } from "../types";
 import { MIGRATORS_CONF, TOKENS_CONF } from "../config";
 
