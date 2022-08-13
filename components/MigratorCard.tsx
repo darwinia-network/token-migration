@@ -8,10 +8,46 @@ import { ChainSlector } from "./ChainSelector";
 import { LukyAddress } from "./LukyAddress";
 import { MigratorSelector } from "./MigratorSelector";
 
-import { approveKton, migrateKton, allowanceKton } from "../utils";
+import { approveKton, migrateKton, allowanceKton, lukytoast } from "../utils";
 import { useApi } from "../hooks";
 import { MIGRATORS_CONF, TOKENS_CONF, CHAINS_CONF } from "../config";
 import { ChainID } from "../types";
+
+const toastTxResult = ({
+  type,
+  error,
+  txHash,
+  explorers,
+}: {
+  error?: Error;
+  txHash?: string;
+  explorers?: string[];
+  type?: "failed" | "confirmed" | "succeeded";
+}) => {
+  if (error) {
+    lukytoast.error({
+      title: "Transction failed",
+      content: <p className="text-left break-words">{error.message}</p>,
+    });
+  } else if (txHash && explorers?.length && type) {
+    lukytoast.success({
+      title: `Transction ${type}`,
+      content: (
+        <p className="text-left break-words">
+          <span>Transcton hash: </span>
+          <a
+            href={`${explorers[0]}/tx/${txHash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:opacity-80"
+          >
+            {txHash}
+          </a>
+        </p>
+      ),
+    });
+  }
+};
 
 export const MigratorCard = () => {
   const { provider, balance, accounts, currentChain, migratorIndex } = useApi();
@@ -21,17 +57,51 @@ export const MigratorCard = () => {
 
   const handleApprove = useCallback(async () => {
     if (migratorIndex !== null && currentChain && provider) {
+      const chainConfig = CHAINS_CONF[currentChain as ChainID];
       const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
 
-      await approveKton(provider, TOKENS_CONF[migrator.from].options.address, migrator.contract);
+      await approveKton(provider, TOKENS_CONF[migrator.from].options.address, migrator.contract, {
+        onError: (error) => toastTxResult({ error }),
+        onResponse(txHash) {
+          toastTxResult({
+            txHash,
+            type: "confirmed",
+            explorers: chainConfig.blockExplorerUrls,
+          });
+        },
+        onSuccess(txHash) {
+          toastTxResult({
+            txHash,
+            type: "succeeded",
+            explorers: chainConfig.blockExplorerUrls,
+          });
+        },
+      });
     }
   }, [migratorIndex, currentChain, provider]);
 
   const handleMigrate = useCallback(async () => {
     if (migratorIndex !== null && currentChain && provider) {
+      const chainConfig = CHAINS_CONF[currentChain as ChainID];
       const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
 
-      await migrateKton(provider, migrator.contract);
+      await migrateKton(provider, migrator.contract, {
+        onError: (error) => toastTxResult({ error }),
+        onResponse(txHash) {
+          toastTxResult({
+            txHash,
+            type: "confirmed",
+            explorers: chainConfig.blockExplorerUrls,
+          });
+        },
+        onSuccess(txHash) {
+          toastTxResult({
+            txHash,
+            type: "succeeded",
+            explorers: chainConfig.blockExplorerUrls,
+          });
+        },
+      });
     }
   }, [migratorIndex, currentChain, provider]);
 
@@ -95,7 +165,7 @@ export const MigratorCard = () => {
                 <LukyButton
                   className="w-full"
                   type="primary"
-                  disable={!balance?.oldToken?.gt(BigNumber.from(0))}
+                  // disable={!balance?.oldToken?.gt(BigNumber.from(0))}
                   onClick={handleMigrate}
                 >
                   Migrate Token

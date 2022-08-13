@@ -49,10 +49,40 @@ export const allowanceKton = async (
   }
 };
 
+const txCallback = ({
+  onError = () => undefined,
+  onSuccess = () => undefined,
+  onResponse = () => undefined,
+}: {
+  onError?: (error: Error) => void;
+  onSuccess?: (txHash: string) => void;
+  onResponse?: (txHash: string) => void;
+}) => {
+  return {
+    errorCallback: ({ error }: { error: unknown }) => {
+      console.error("transaction error:", error);
+      onError(error as Error);
+    },
+    responseCallback: ({ response }: { response: providers.TransactionResponse }) => {
+      console.log("transaction response:", response.hash);
+      onResponse(response.hash);
+    },
+    successCallback: ({ receipt }: { receipt: providers.TransactionReceipt }) => {
+      console.log("transaction receipt:", receipt.transactionHash);
+      onSuccess(receipt.transactionHash);
+    },
+  };
+};
+
 export const approveKton = async (
   provider?: providers.Web3Provider | null,
   contractAddress?: string | null,
-  spender?: string | null
+  spender?: string | null,
+  callback?: {
+    onError?: (error: Error) => void;
+    onSuccess?: (txHash: string) => void;
+    onResponse?: (txHash: string) => void;
+  }
 ) => {
   if (provider && contractAddress && spender) {
     const contract = new Contract(contractAddress, ktonAbi, provider.getSigner());
@@ -61,37 +91,25 @@ export const approveKton = async (
       contract,
       "approve",
       [spender, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"],
-      {
-        errorCallback: ({ error }) => {
-          console.error("approve error:", error);
-        },
-        responseCallback: ({ response }) => {
-          console.log("approve response:", response.hash);
-        },
-        successCallback: ({ receipt }) => {
-          console.log("approve receipt:", receipt.transactionHash);
-        },
-      }
+      txCallback({ ...callback })
     );
     // await contract.approve(spender, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
   }
 };
 
-export const migrateKton = async (provider?: providers.Web3Provider | null, contractAddress?: string | null) => {
+export const migrateKton = async (
+  provider?: providers.Web3Provider | null,
+  contractAddress?: string | null,
+  callback?: {
+    onError?: (error: Error) => void;
+    onSuccess?: (txHash: string) => void;
+    onResponse?: (txHash: string) => void;
+  }
+) => {
   if (provider && contractAddress) {
     const contract = new Contract(contractAddress, migratorAbi, provider.getSigner());
 
-    await triggerContract(contract, "migrate", [], {
-      errorCallback: ({ error }) => {
-        console.error("migrate error:", error);
-      },
-      responseCallback: ({ response }) => {
-        console.log("migrate response:", response.hash);
-      },
-      successCallback: ({ receipt }) => {
-        console.log("migrate receipt:", receipt.transactionHash);
-      },
-    });
+    await triggerContract(contract, "migrate", [], txCallback({ ...callback }));
     // await contract.migrate();
   }
 };

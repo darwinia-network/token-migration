@@ -12,7 +12,7 @@ export const useToastQueue = () => {
 
   const add = (item: ToastQueue) => {
     const _tid = getName();
-    const toast = { _tid, duration: 3000, ...item };
+    const toast = { _tid, duration: 6000, ...item };
 
     setQueue((v) => [...v, toast]);
     setTimeout(() => {

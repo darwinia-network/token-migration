@@ -16,7 +16,7 @@ const dispatchToast = (toast: ToastQueue) => {
 };
 
 export const lukytoast = {
-  success: ({ content }: { content: ReactNode }) => dispatchToast({ content, type: "success" }),
-  warning: ({ content }: { content: ReactNode }) => dispatchToast({ content, type: "warning" }),
-  error: ({ content }: { content: ReactNode }) => dispatchToast({ content, type: "error" }),
+  success: ({ title, content }: { title: ReactNode; content?: ReactNode }) => dispatchToast({ title, content }),
+  warning: ({ title, content }: { title: ReactNode; content?: ReactNode }) => dispatchToast({ title, content }),
+  error: ({ title, content }: { title: ReactNode; content?: ReactNode }) => dispatchToast({ title, content }),
 };
