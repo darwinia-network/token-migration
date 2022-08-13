@@ -15,6 +15,7 @@ export const LukyButton = ({ children, className, type, disable, onClick }: Prop
       } text-sm leading-7 font-light py-2 px-4 hover:bg-white hover:text-black hover:border-white ${className}`}
       onClick={onClick}
       disabled={disable}
+      type="button"
     >
       {children}
     </button>
