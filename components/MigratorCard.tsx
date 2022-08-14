@@ -179,7 +179,7 @@ export const MigratorCard = () => {
                   className="w-full"
                   type="primary"
                   loading={busy}
-                  // disable={!balance?.oldToken?.gt(BigNumber.from(0))}
+                  disable={!balance?.oldToken?.gt(BigNumber.from(0))}
                   onClick={handleMigrate}
                 >
                   Migrate Token
