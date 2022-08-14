@@ -3,7 +3,7 @@ import { BigNumber } from "ethers";
 import { from } from "rxjs";
 
 import { useApi } from "./api";
-import { getKtonBalance } from "../utils/common";
+import { getKtonBalance } from "../utils";
 
 export const useKtonBalance = (contractAddress?: string | null, account?: string | null) => {
   const { provider } = useApi();

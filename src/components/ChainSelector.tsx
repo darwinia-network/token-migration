@@ -1,7 +1,7 @@
 import { utils } from "ethers";
 import React, { MouseEventHandler, useCallback, useEffect, useMemo, useState } from "react";
 
-import { useApi } from "../hooks/api";
+import { useApi } from "../hooks";
 import { ChainID } from "../types";
 import { CHAINS_CONF } from "../config";
 

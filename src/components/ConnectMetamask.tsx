@@ -1,6 +1,6 @@
 import React, { CSSProperties } from "react";
 
-import { useApi } from "../hooks/api";
+import { useApi } from "../hooks";
 import { LukyButton } from "./LukyButton";
 
 export const ConnectMetamask = ({ className, style }: { className?: string; style?: CSSProperties }) => {

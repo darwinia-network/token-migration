@@ -1,7 +1,7 @@
 import React from "react";
 
-import { ApiProvider } from "./providers/api";
 import PageHome from "./pages/home";
+import { ApiProvider } from "./providers/api";
 
 function App() {
   return (

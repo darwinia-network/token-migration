@@ -2,11 +2,11 @@ import React, { createContext, PropsWithChildren, useCallback, useEffect, useSta
 import { BigNumber, providers } from "ethers";
 import { Subscription, EMPTY, forkJoin, from } from "rxjs";
 
-import { getKtonBalance } from "../utils/common";
+import { getKtonBalance } from "../utils";
 import { ChainID } from "../types";
 import { MIGRATORS_CONF, TOKENS_CONF } from "../config";
 
-export interface ApiCtx {
+interface ApiCtx {
   accounts: string[] | null;
   provider: providers.Web3Provider | null;
   currentChain: number | null;
