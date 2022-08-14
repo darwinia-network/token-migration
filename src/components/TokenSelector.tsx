@@ -1,4 +1,4 @@
-import React, { MouseEventHandler, useCallback, useEffect, useState } from "react";
+import React, { MouseEventHandler, useCallback, useEffect, useRef, useState } from "react";
 import { BigNumber, utils } from "ethers";
 
 import { LukyButton } from "./LukyButton";
@@ -112,11 +112,32 @@ interface Props {
   onSelect?: (index: number) => void;
 }
 
-export const TokenSelector = ({ label, value, options, balance, receive, className, onSelect }: Props) => {
+export const TokenSelector = ({
+  label,
+  value,
+  options,
+  balance,
+  receive,
+  className,
+  onSelect = () => undefined,
+}: Props) => {
+  const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
+  const handleSelect = useCallback(
+    (index: number) => {
+      setOpen(false);
+      onSelect(index);
+    },
+    [onSelect]
+  );
+
   useEffect(() => {
-    document.addEventListener("click", () => setOpen(false));
+    document.addEventListener("click", (e) => {
+      if (!ref.current?.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    });
   }, []);
 
   return (
@@ -128,20 +149,19 @@ export const TokenSelector = ({ label, value, options, balance, receive, classNa
         </span>
       </div>
 
-      <div className="relative">
+      <div className="relative" ref={ref}>
         <SelectedItem
           open={open}
           receive={receive}
           tokenConfig={options[value]}
-          onClick={(e) => {
-            e.stopPropagation();
+          onClick={() => {
             setOpen((prev) => !prev);
           }}
         />
 
         <div className={`border border-t-0 absolute left-0 w-full bg-black z-10 ${open ? "" : "hidden"}`}>
           {options.map((item, index) => (
-            <OptionItem key={index} value={index} disable={item.disable} tokenConfig={item} onSelect={onSelect} />
+            <OptionItem key={index} value={index} disable={item.disable} tokenConfig={item} onSelect={handleSelect} />
           ))}
         </div>
       </div>

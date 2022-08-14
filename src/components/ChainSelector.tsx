@@ -1,5 +1,5 @@
 import { utils } from "ethers";
-import React, { MouseEventHandler, useCallback, useEffect, useMemo, useState } from "react";
+import React, { MouseEventHandler, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useApi } from "../hooks";
 import { ChainID } from "../types";
@@ -66,6 +66,7 @@ const OptionItem = ({
 
 export const ChainSlector = () => {
   const { currentChain } = useApi();
+  const ref = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
 
   const currentChainConfig = useMemo(
@@ -74,6 +75,8 @@ export const ChainSlector = () => {
   );
 
   const handleSelect = useCallback(async (chainId: ChainID) => {
+    setOpen(false);
+
     try {
       await window.ethereum.request({
         method: "wallet_switchEthereumChain",
@@ -96,17 +99,20 @@ export const ChainSlector = () => {
   }, []);
 
   useEffect(() => {
-    document.addEventListener("click", () => setOpen(false));
+    document.addEventListener("click", (e) => {
+      if (!ref.current?.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    });
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative" ref={ref}>
       <SelectedItem
         open={open}
         iconSrc={currentChainConfig ? currentChainConfig.logoSrc : "/images/not-supported.svg"}
         label={currentChainConfig ? currentChainConfig.chainName : "Not Supported"}
-        onClick={(e) => {
-          e.stopPropagation();
+        onClick={() => {
           setOpen((prev) => !prev);
         }}
       />
