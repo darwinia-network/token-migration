@@ -51,6 +51,7 @@ const toastTxResult = ({
 
 export const MigratorCard = () => {
   const { provider, balance, accounts, currentChain, migratorIndex } = useApi();
+  const [busy, setBusy] = useState(false);
   const [needApprove, setNeedApprove] = useState(false);
 
   const isSupported = useMemo(() => currentChain !== null && CHAINS_CONF[currentChain as ChainID], [currentChain]);
@@ -60,8 +61,12 @@ export const MigratorCard = () => {
       const chainConfig = CHAINS_CONF[currentChain as ChainID];
       const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
 
+      setBusy(true);
       await approveKton(provider, TOKENS_CONF[migrator.from].options.address, migrator.contract, {
-        onError: (error) => toastTxResult({ error }),
+        onError: (error) => {
+          toastTxResult({ error });
+          setBusy(false);
+        },
         onResponse(txHash) {
           toastTxResult({
             txHash,
@@ -75,6 +80,7 @@ export const MigratorCard = () => {
             type: "succeeded",
             explorers: chainConfig.blockExplorerUrls,
           });
+          setBusy(false);
         },
       });
     }
@@ -85,8 +91,12 @@ export const MigratorCard = () => {
       const chainConfig = CHAINS_CONF[currentChain as ChainID];
       const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
 
+      setBusy(true);
       await migrateKton(provider, migrator.contract, {
-        onError: (error) => toastTxResult({ error }),
+        onError: (error) => {
+          toastTxResult({ error });
+          setBusy(false);
+        },
         onResponse(txHash) {
           toastTxResult({
             txHash,
@@ -100,6 +110,7 @@ export const MigratorCard = () => {
             type: "succeeded",
             explorers: chainConfig.blockExplorerUrls,
           });
+          setBusy(false);
         },
       });
     }
@@ -157,6 +168,7 @@ export const MigratorCard = () => {
                 <LukyButton
                   className="w-full"
                   onClick={handleApprove}
+                  loading={busy}
                   disable={!balance?.oldToken?.gt(BigNumber.from(0))}
                 >
                   Approve
@@ -165,6 +177,7 @@ export const MigratorCard = () => {
                 <LukyButton
                   className="w-full"
                   type="primary"
+                  loading={busy}
                   // disable={!balance?.oldToken?.gt(BigNumber.from(0))}
                   onClick={handleMigrate}
                 >
