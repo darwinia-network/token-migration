@@ -50,7 +50,7 @@ const toastTxResult = ({
 };
 
 export const MigratorCard = () => {
-  const { provider, balance, accounts, currentChain, migratorIndex } = useApi();
+  const { provider, balance, accounts, currentChain, migratorIndex, refreshBalance } = useApi();
   const [busy, setBusy] = useState(false);
   const [needApprove, setNeedApprove] = useState(false);
 
@@ -110,11 +110,12 @@ export const MigratorCard = () => {
             type: "succeeded",
             explorers: chainConfig.blockExplorerUrls,
           });
+          refreshBalance();
           setBusy(false);
         },
       });
     }
-  }, [migratorIndex, currentChain, provider]);
+  }, [migratorIndex, currentChain, provider, refreshBalance]);
 
   useEffect(() => {
     let sub$$: Subscription;
