@@ -72,13 +72,13 @@ const OptionItem = ({
   value,
   disable,
   tokenConfig,
-  migrateSuccessCount,
+  refreshTrigger,
   onSelect = () => undefined,
 }: {
   value: number;
   disable?: boolean;
   tokenConfig: TokenConfig;
-  migrateSuccessCount?: number;
+  refreshTrigger?: boolean;
   onSelect?: (index: number) => void;
 }) => {
   const { accounts } = useApi();
@@ -88,7 +88,7 @@ const OptionItem = ({
     const sub$$ = refresh();
 
     return () => sub$$.unsubscribe();
-  }, [migrateSuccessCount]);
+  }, [refreshTrigger]);
 
   return (
     <div
@@ -121,7 +121,7 @@ interface Props {
   balance?: BigNumber | null;
   receive?: BigNumber | null;
   options: (TokenConfig & { disable?: boolean })[];
-  migrateSuccessCount?: number;
+  refreshTrigger?: boolean;
   className?: string;
   onSelect?: (index: number) => void;
 }
@@ -133,7 +133,7 @@ export const TokenSelector = ({
   balance,
   receive,
   className,
-  migrateSuccessCount,
+  refreshTrigger,
   onSelect = () => undefined,
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -181,7 +181,7 @@ export const TokenSelector = ({
               value={index}
               disable={item.disable}
               tokenConfig={item}
-              migrateSuccessCount={migrateSuccessCount}
+              refreshTrigger={refreshTrigger}
               onSelect={handleSelect}
             />
           ))}
