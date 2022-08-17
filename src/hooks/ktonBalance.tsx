@@ -11,7 +11,7 @@ export const useKtonBalance = (contractAddress?: string | null, account?: string
 
   const getBalance = useCallback(
     () => from(getKtonBalance(provider, contractAddress, account)).subscribe(setBalance),
-    [contractAddress && account && provider]
+    [contractAddress, account, provider]
   );
 
   useEffect(() => {
