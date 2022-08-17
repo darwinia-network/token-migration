@@ -26,7 +26,7 @@ const social = [
 
 export const PageFooter = ({ className }: { className?: string }) => (
   <footer className={`h-16 flex flex-col justify-center border-t border-t-white backdrop-blur-2xl w-full ${className}`}>
-    <div className="container mx-auto flex items-center justify-between">
+    <div className="w-[1280px] px-8 mx-auto flex items-center justify-between">
       <div className="flex items-center">
         <img alt="..." src="/images/copyright.svg" width={16} height={16} />
         <span className="ml-px text-sm font-light">2022 Darwinia Network</span>
