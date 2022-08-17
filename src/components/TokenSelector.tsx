@@ -97,7 +97,11 @@ const OptionItem = ({
         <span className="text-sm leading-7 font-light">{utils.formatEther(balance)}</span>
       </div>
 
-      <div className="w-1/3 invisible"></div>
+      <div className={`w-1/3 ${disable ? "flex justify-end" : "invisible"}`}>
+        <div className="border w-fit">
+          <span className="text-[0.7rem] leading-6 font-semibold px-3 py-2">Coming soon</span>
+        </div>
+      </div>
     </div>
   );
 };

@@ -60,6 +60,11 @@ const OptionItem = ({
           <span className="text-[0.7rem] leading-6 font-semibold px-3 py-2">TestNet</span>
         </div>
       )}
+      {disable && (
+        <div className="border">
+          <span className="text-[0.7rem] leading-6 font-semibold px-3 py-2">Coming soon</span>
+        </div>
+      )}
     </div>
   );
 };
