@@ -16,8 +16,7 @@ const SelectedItem = ({
   tokenConfig: TokenConfig;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }) => {
-  const { provider, accounts } = useApi();
-  const { balance } = useKtonBalance(tokenConfig.options.address, accounts ? accounts[0] : null);
+  const { provider, balance } = useApi();
 
   const handleAddToMetaMask = useCallback(async () => {
     try {
@@ -45,7 +44,9 @@ const SelectedItem = ({
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <span className="text-sm leading-7 font-light">{utils.formatEther(receive ?? balance)}</span>
+        <span className="text-sm leading-7 font-light">
+          {utils.formatEther(receive || balance?.oldToken || BigNumber.from(0))}
+        </span>
       </div>
 
       <div className="w-1/3 flex justify-end">
