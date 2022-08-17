@@ -57,7 +57,7 @@ const OptionItem = ({
       <span className="text-sm leading-7 font-light text-[#C6C6C6] tracking-wide">{label}</span>
       {isTextNet && (
         <div className="bg-primary">
-          <span className="text-[0.7rem] leading-6 font-semibold px-3 py-2">TextNet</span>
+          <span className="text-[0.7rem] leading-6 font-semibold px-3 py-2">TestNet</span>
         </div>
       )}
     </div>
