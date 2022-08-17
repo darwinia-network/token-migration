@@ -80,6 +80,8 @@ export const MigratorCard = () => {
             type: "succeeded",
             explorers: chainConfig.blockExplorerUrls,
           });
+
+          setNeedApprove(false);
           setBusy(false);
         },
       });
