@@ -72,6 +72,10 @@ export const ApiProvider = ({ children }: PropsWithChildren<unknown>) => {
       window.ethereum.on("chainChanged", () => {
         setProvider(new providers.Web3Provider(window.ethereum));
       });
+
+      window.ethereum.on("accountsChanged", (accs: string[]) => {
+        setAccounts(accs);
+      });
     } else {
       setProvider(null);
     }
