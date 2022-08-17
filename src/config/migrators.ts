@@ -17,8 +17,8 @@ export const MIGRATORS_CONF: Record<ChainID, Migrator[]> = {
   ],
   [ChainID.PangolinSmartChain]: [
     {
-      from: TokenSymbol.XPRingClassic,
-      to: TokenSymbol.XWPRing,
+      from: TokenSymbol.XORingClassic,
+      to: TokenSymbol.XWORing,
       contract: "",
       disable: true,
     },

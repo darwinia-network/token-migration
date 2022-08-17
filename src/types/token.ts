@@ -2,11 +2,11 @@ import type { WatchAssetParams } from "./metamask";
 
 export enum TokenSymbol {
   XWRing = "xWRING",
-  XWPRing = "xWPRING",
+  XWORing = "xWORING",
   CKton = "CKTON",
   PKton = "PKTON",
   XRingClassic = "xRING(Classic)",
-  XPRingClassic = "xPRING(Classic)",
+  XORingClassic = "xORING(Classic)",
   WCKtonClassic = "WCKTON(Classic)",
   WPKtonClassic = "WPKTON(Classic)",
 }

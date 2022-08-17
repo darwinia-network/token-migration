@@ -47,21 +47,21 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
 
   // Pangolin Smart Chain
 
-  [TokenSymbol.XPRingClassic]: {
+  [TokenSymbol.XORingClassic]: {
     type: "ERC20",
     options: {
       address: "",
-      symbol: TokenSymbol.XPRingClassic,
+      symbol: TokenSymbol.XORingClassic,
       decimals: 18,
     },
     iconSrc: "/images/x-wpring.svg",
     isRing: true,
   },
-  [TokenSymbol.XWPRing]: {
+  [TokenSymbol.XWORing]: {
     type: "ERC20",
     options: {
       address: "",
-      symbol: TokenSymbol.XWPRing,
+      symbol: TokenSymbol.XWORing,
       decimals: 18,
     },
     iconSrc: "/images/x-wpring.svg",
