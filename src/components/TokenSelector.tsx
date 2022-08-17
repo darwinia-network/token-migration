@@ -72,15 +72,23 @@ const OptionItem = ({
   value,
   disable,
   tokenConfig,
+  migrateSuccessCount,
   onSelect = () => undefined,
 }: {
   value: number;
   disable?: boolean;
   tokenConfig: TokenConfig;
+  migrateSuccessCount?: number;
   onSelect?: (index: number) => void;
 }) => {
   const { accounts } = useApi();
-  const { balance } = useKtonBalance(tokenConfig.options.address, accounts ? accounts[0] : null);
+  const { balance, refresh } = useKtonBalance(tokenConfig.options.address, accounts ? accounts[0] : null);
+
+  useEffect(() => {
+    const sub$$ = refresh();
+
+    return () => sub$$.unsubscribe();
+  }, [migrateSuccessCount]);
 
   return (
     <div
@@ -113,6 +121,7 @@ interface Props {
   balance?: BigNumber | null;
   receive?: BigNumber | null;
   options: (TokenConfig & { disable?: boolean })[];
+  migrateSuccessCount?: number;
   className?: string;
   onSelect?: (index: number) => void;
 }
@@ -124,6 +133,7 @@ export const TokenSelector = ({
   balance,
   receive,
   className,
+  migrateSuccessCount,
   onSelect = () => undefined,
 }: Props) => {
   const ref = useRef<HTMLDivElement>(null);
@@ -166,7 +176,14 @@ export const TokenSelector = ({
 
         <div className={`border border-t-0 absolute left-0 w-full bg-black z-10 ${open ? "" : "hidden"}`}>
           {options.map((item, index) => (
-            <OptionItem key={index} value={index} disable={item.disable} tokenConfig={item} onSelect={handleSelect} />
+            <OptionItem
+              key={index}
+              value={index}
+              disable={item.disable}
+              tokenConfig={item}
+              migrateSuccessCount={migrateSuccessCount}
+              onSelect={handleSelect}
+            />
           ))}
         </div>
       </div>

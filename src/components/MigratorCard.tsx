@@ -53,6 +53,7 @@ export const MigratorCard = () => {
   const { provider, balance, accounts, currentChain, migratorIndex, refreshBalance } = useApi();
   const [busy, setBusy] = useState(false);
   const [needApprove, setNeedApprove] = useState(false);
+  const [migrateSuccessCount, setMigrateSuccessCount] = useState(0);
 
   const isSupported = useMemo(() => currentChain !== null && CHAINS_CONF[currentChain as ChainID], [currentChain]);
 
@@ -113,6 +114,7 @@ export const MigratorCard = () => {
             explorers: chainConfig.blockExplorerUrls,
           });
           refreshBalance();
+          setMigrateSuccessCount((prev) => prev + 1);
           setBusy(false);
         },
       });
@@ -163,7 +165,7 @@ export const MigratorCard = () => {
           className={`pt-4 px-4 relative ${isSupported ? "" : "opacity-50"}`}
           style={{ height: "calc(100% - 4rem)" }}
         >
-          <MigratorSelector />
+          <MigratorSelector migrateSuccessCount={migrateSuccessCount} />
 
           {isSupported ? (
             <div className="absolute bottom-5 left-0 w-full px-4">

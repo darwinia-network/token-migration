@@ -6,7 +6,7 @@ import { useApi } from "../hooks";
 import { MIGRATORS_CONF, TOKENS_CONF } from "../config";
 import { ChainID } from "../types";
 
-export const MigratorSelector = () => {
+export const MigratorSelector = ({ migrateSuccessCount }: { migrateSuccessCount?: number }) => {
   const { balance, currentChain, migratorIndex, setMigratorIndex } = useApi();
 
   if (migratorIndex === null || currentChain === null) {
@@ -22,6 +22,7 @@ export const MigratorSelector = () => {
         options={MIGRATORS_CONF[currentChain as ChainID]
           .map((item) => ({ symbol: item.from, disable: item.disable }))
           .map(({ symbol, disable }) => ({ ...TOKENS_CONF[symbol], disable }))}
+        migrateSuccessCount={migrateSuccessCount}
         onSelect={setMigratorIndex}
       />
       <TokenSelector
