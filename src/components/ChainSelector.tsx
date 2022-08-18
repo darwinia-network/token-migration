@@ -19,13 +19,13 @@ const SelectedItem = ({
   return (
     <div className="py-px px-3 bg-black flex items-center hover:cursor-pointer hover:opacity-80" onClick={onClick}>
       <img alt="..." src={iconSrc} width={20} height={20} />
-      <span className="mx-2 text-sm leading-7 font-light">{label}</span>
+      <span className="text text-secondary mx-2 text-sm leading-7 font-light truncate">{label}</span>
       <img
         alt="..."
         src="/images/drop-down.svg"
         width={16}
         height={16}
-        className={`${open ? "rotate-180" : "rotate-0"}`}
+        className={`${open ? "rotate-180" : "rotate-0"} opacity-80`}
       />
     </div>
   );
@@ -54,15 +54,15 @@ const OptionItem = ({
       onClick={() => onSelect(value)}
     >
       <img alt="..." src={iconSrc} width={30} height={30} />
-      <span className="text-sm leading-7 font-light text-[#C6C6C6] tracking-wide">{label}</span>
+      <span className="text-sm leading-7 font-light text-secondary truncate">{label}</span>
       {isTextNet && (
         <div className="bg-primary">
-          <span className="text-[0.7rem] leading-6 font-semibold px-3 py-2">TestNet</span>
+          <span className="text text-secondary text-[0.7rem] leading-6 font-semibold px-3 py-2">TestNet</span>
         </div>
       )}
       {disable && (
         <div className="border">
-          <span className="text-[0.7rem] leading-6 font-semibold px-3 py-2">Coming soon</span>
+          <span className="text text-secondary text-[0.7rem] leading-6 font-semibold px-3 py-2">Coming soon</span>
         </div>
       )}
     </div>
@@ -123,7 +123,7 @@ export const ChainSlector = () => {
       />
 
       <div
-        className={`border-[2px] border-primary bg-black z-10 absolute right-0 w-80 py-3 flex flex-col space-y-4 ${
+        className={`border-[2px] border-primary bg-black z-10 absolute w-[22rem] right-0 py-3 flex flex-col space-y-4 ${
           open ? "" : "hidden"
         }`}
       >

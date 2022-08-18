@@ -16,7 +16,7 @@ export const ConnectMetamask = ({ className, style }: { className?: string; styl
           href="https://metamask.io/"
           target="_blank"
           rel="noopener noreferrer"
-          className="border-[2px] border-primary text-sm leading-7 font-light py-2 px-6 hover:bg-white hover:text-black hover:border-white"
+          className="border-[2px] border-primary text-sm leading-7 font-light py-2 px-6 text-secondary hover:bg-white hover:text-black hover:border-white"
         >{`Install MetaMask >`}</a>
       )}
     </div>

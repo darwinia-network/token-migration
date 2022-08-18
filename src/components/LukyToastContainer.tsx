@@ -19,7 +19,7 @@ export const LukyToastContainer = ({ toast }: { toast?: ToastQueue }) => {
     <div className="bg-black fixed top-12 right-8">
       {queue.map((item, index) => (
         <div key={index} className="border p-4 w-96 mt-4">
-          <h3 className="text-xl">{item.title}</h3>
+          <h3 className="text-xl title text-secondary">{item.title}</h3>
           <div className="mt-4">{item.content}</div>
         </div>
       ))}

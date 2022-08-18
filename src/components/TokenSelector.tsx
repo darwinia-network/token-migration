@@ -40,11 +40,11 @@ const SelectedItem = ({
     >
       <div className="flex items-center w-1/3">
         <img alt="..." src={tokenConfig.iconSrc} width={30} height={30} />
-        <span className="ml-2 text-sm leading-7 font-light">{tokenConfig.options.symbol}</span>
+        <span className="ml-2 text-sm leading-7 font-light text-secondary">{tokenConfig.options.symbol}</span>
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <span className="text-sm leading-7 font-light">
+        <span className="text-sm leading-7 font-light text-secondary">
           {utils.formatEther(receive || balance?.oldToken || BigNumber.from(0))}
         </span>
       </div>
@@ -60,7 +60,7 @@ const SelectedItem = ({
             src="/images/drop-down.svg"
             width={16}
             height={16}
-            className={`${open ? "rotate-180" : "rotate-0"}`}
+            className={`${open ? "rotate-180" : "rotate-0"} opacity-80`}
           />
         )}
       </div>
@@ -99,16 +99,16 @@ const OptionItem = ({
     >
       <div className="flex items-center w-1/3">
         <img alt="..." src={tokenConfig.iconSrc} width={30} height={30} />
-        <span className="ml-2 text-sm leading-7 font-light">{tokenConfig.options.symbol}</span>
+        <span className="ml-2 text-sm leading-7 font-light text-secondary">{tokenConfig.options.symbol}</span>
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <span className="text-sm leading-7 font-light">{utils.formatEther(balance)}</span>
+        <span className="text-sm leading-7 font-light text-secondary">{utils.formatEther(balance)}</span>
       </div>
 
       <div className={`w-1/3 ${disable ? "flex justify-end" : "invisible"}`}>
         <div className="border w-fit">
-          <span className="text-[0.7rem] leading-6 font-semibold px-3 py-2">Coming soon</span>
+          <span className="text-[0.7rem] leading-6 font-semibold px-3 py-2 text-secondary text">Coming soon</span>
         </div>
       </div>
     </div>
@@ -158,8 +158,8 @@ export const TokenSelector = ({
   return (
     <div className={`flex flex-col ${className}`}>
       <div className="inline-flex items-center justify-between">
-        <span className="text-sm leading-7 font-light">{label}</span>
-        <span className="text-sm leading-7 font-light">
+        <span className="text-sm leading-7 font-light text-secondary">{label}</span>
+        <span className="text-sm leading-7 font-light text-secondary">
           Balance: {`${balance ? utils.formatEther(balance) : "--"}`}
         </span>
       </div>

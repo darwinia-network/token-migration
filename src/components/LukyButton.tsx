@@ -11,7 +11,7 @@ interface Props {
 export const LukyButton = ({ children, className, type, disable, loading, onClick }: PropsWithChildren<Props>) => {
   return (
     <button
-      className={`${type === "primary" ? "bg-primary" : "border-[2px] border-primary"} ${
+      className={`${type === "primary" ? "bg-primary" : "border-[2px] border-primary text-secondary"} ${
         disable || loading ? "hover:cursor-not-allowed opacity-50" : ""
       } text-sm leading-7 font-light py-2 px-4 hover:bg-white hover:text-black hover:border-white relative ${className}`}
       onClick={onClick}

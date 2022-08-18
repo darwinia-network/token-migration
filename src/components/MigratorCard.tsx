@@ -27,19 +27,19 @@ const toastTxResult = ({
   if (error) {
     lukytoast.error({
       title: "Transction failed",
-      content: <p className="text-left break-words">{error.message}</p>,
+      content: <p className="text-left break-words text-secondary">{error.message}</p>,
     });
   } else if (txHash && explorers?.length && type) {
     lukytoast.success({
       title: `Transction ${type}`,
       content: (
         <p className="text-left break-words">
-          <span>Transcton hash: </span>
+          <span className="text-secondary">Transcton hash: </span>
           <a
             href={`${explorers[0]}/tx/${txHash}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline hover:opacity-80"
+            className="underline text-secondary"
           >
             {txHash}
           </a>
@@ -152,9 +152,9 @@ export const MigratorCard = () => {
   }, [accounts]);
 
   return (
-    <div className="border-[2px] border-primary h-full">
+    <div className="w-[580px] border-[2px] border-primary">
       <div className="bg-primary h-16 flex justify-between items-center px-4">
-        <span className="text-xl font-bold">Migrate Now</span>
+        <span className="title text-xl font-bold">Migrate Now</span>
 
         {accounts?.length && provider ? (
           <div className="flex items-center space-x-2">
@@ -196,7 +196,7 @@ export const MigratorCard = () => {
             </div>
           ) : (
             <div className="flex items-center justify-center" style={{ height: "calc(100% - 4rem)" }}>
-              <p>This Chain Is Not Supported</p>
+              <p className="text-secondary">This Chain Is Not Supported</p>
             </div>
           )}
         </div>

@@ -6,7 +6,7 @@ import { Instruction } from "../components/Instruction";
 const Home: React.FC = () => {
   return (
     <PageLayout>
-      <div className="grid grid-cols-2 gap-x-20">
+      <div className="flex justify-between">
         <MigratorCard />
         <Instruction />
       </div>

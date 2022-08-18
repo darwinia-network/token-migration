@@ -25,20 +25,22 @@ const social = [
 ] as { icon: string; link: string; isMail?: boolean }[];
 
 export const PageFooter = ({ className }: { className?: string }) => (
-  <footer className={`h-16 flex flex-col justify-center border-t border-t-white backdrop-blur-2xl w-full ${className}`}>
+  <footer
+    className={`h-16 flex flex-col justify-center border-t border-t-white-half backdrop-blur-2xl w-full ${className}`}
+  >
     <div className="w-[1280px] px-8 mx-auto flex items-center justify-between">
       <div className="flex items-center">
         <img alt="..." src="/images/copyright.svg" width={16} height={16} />
-        <span className="ml-px text-sm font-light">2022 Darwinia Network</span>
+        <span className="text text-secondary ml-px text-sm font-light">2022 Darwinia Network</span>
       </div>
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-5">
         {social.map((item, index) => (
           <a
             key={index}
             target="_blank"
             rel="noopener noreferrer"
             href={item.isMail ? `mailto:${item.link}` : item.link}
-            className="inline-flex hover:opacity-80"
+            className="inline-flex"
           >
             <img alt="..." src={item.icon} width={20} height={20} />
           </a>

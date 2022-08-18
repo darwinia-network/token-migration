@@ -26,17 +26,44 @@ code {
     monospace;
 } */
 
+@font-face {
+  font-family: JetBrainsMono-Light;
+  src: url("./fonts/JetBrainsMono-Light.woff2");
+}
+
+@font-face {
+  font-family: JetBrainsMono-Bold;
+  src: url("./fonts/JetBrainsMono-Bold.woff2");
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   html {
-    font-family: "JetBrains Mono", sans-serif;
-  }
+    @apply font-[JetBrainsMono-Light]; }
 
   body {
-    color: white;
-    background: black;
+    @apply bg-black;
+    @apply text-white;
+  }
+
+  a,
+  button {
+    @apply hover:opacity-80; }
+}
+
+@layer components {
+  .container {
+    @apply min-w-[1200px] max-w-[1320px] px-[1.25rem] lg:px-[1.875rem] xl:px-[3.75rem] mx-auto;
+  }
+
+  .text {
+    @apply font-[JetBrainsMono-Light];
+  }
+
+  .title {
+    @apply font-[JetBrainsMono-Bold];
   }
 }
