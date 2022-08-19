@@ -26,15 +26,15 @@ const toastTxResult = ({
 }) => {
   if (error) {
     lukytoast.error({
-      title: "Transction failed",
+      title: "Transaction failed",
       content: <p className="text-left break-words text-secondary">{error.message}</p>,
     });
   } else if (txHash && explorers?.length && type) {
     lukytoast.success({
-      title: `Transction ${type}`,
+      title: `Transaction ${type}`,
       content: (
         <p className="text-left break-words">
-          <span className="text-secondary">Transcton hash: </span>
+          <span className="text-secondary">Transaction hash: </span>
           <a
             href={`${explorers[0]}/tx/${txHash}`}
             target="_blank"
