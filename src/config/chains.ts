@@ -9,7 +9,7 @@ export const CHAINS_CONF: Record<ChainID, ChainConfig> = {
     blockExplorerUrls: ["https://crab.subscan.io"],
 
     logoSrc: "/images/crab-smart-chain.svg",
-    disable: false,
+    disable: true,
   },
   [ChainID.PangolinSmartChain]: {
     chainId: utils.hexlify(ChainID.PangolinSmartChain),
