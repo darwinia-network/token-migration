@@ -27,7 +27,7 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
   [TokenSymbol.WCKtonClassic]: {
     type: "ERC20",
     options: {
-      address: "0x159933c635570d5042723359fbd1619dfe83d3f3",
+      address: "",
       symbol: TokenSymbol.WCKtonClassic,
       decimals: 18,
     },
@@ -37,7 +37,7 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
   [TokenSymbol.CKton]: {
     type: "ERC20",
     options: {
-      address: "0x0000000000000000000000000000000000000402",
+      address: "",
       symbol: TokenSymbol.CKton,
       decimals: 18,
     },

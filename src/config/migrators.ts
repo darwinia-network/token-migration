@@ -11,7 +11,7 @@ export const MIGRATORS_CONF: Record<ChainID, Migrator[]> = {
     {
       from: TokenSymbol.WCKtonClassic,
       to: TokenSymbol.CKton,
-      contract: "0xD5f4940704Eb4cE5e4b51877d49B58A3e93531b6",
+      contract: "",
       disable: true,
     },
   ],
