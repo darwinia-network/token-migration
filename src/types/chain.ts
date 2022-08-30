@@ -7,11 +7,12 @@ export enum ChainName {
 
 export enum ChainID {
   CrabSmartChain = 44,
-  // PangolinSmartChain = 43,
+  PangolinSmartChain = 43,
 }
 
 export interface ChainConfig extends AddEthereumChainParameter {
   logoSrc: string;
   isTextNet?: boolean;
   disable?: boolean;
+  hidden?: boolean;
 }

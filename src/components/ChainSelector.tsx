@@ -128,6 +128,7 @@ export const ChainSlector = () => {
         }`}
       >
         {Object.values(CHAINS_CONF)
+          .filter((item) => !item.hidden)
           .sort((item) => (item.isTextNet ? 1 : -1))
           .map((item, index) => (
             <OptionItem
