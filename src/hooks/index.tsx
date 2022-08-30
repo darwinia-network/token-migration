@@ -1,3 +1,3 @@
 export * from "./api";
-export * from "./ktonBalance";
+export * from "./tokenBalance";
 export * from "./toastQueue";

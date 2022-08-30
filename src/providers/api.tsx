@@ -29,21 +29,15 @@ export const ApiProvider = ({ children }: PropsWithChildren<unknown>) => {
 
   const getBalance = useCallback(() => {
     if (provider && migratorIndex !== null && MIGRATORS_CONF[currentChain as ChainID] && accounts?.length) {
-      const tokenOld = TOKENS_CONF[MIGRATORS_CONF[currentChain as ChainID][migratorIndex].from];
-      const tokenNew = TOKENS_CONF[MIGRATORS_CONF[currentChain as ChainID][migratorIndex].to];
+      const oldToken = TOKENS_CONF[MIGRATORS_CONF[currentChain as ChainID][migratorIndex].from];
+      const newToken = TOKENS_CONF[MIGRATORS_CONF[currentChain as ChainID][migratorIndex].to];
 
       return forkJoin([
-        tokenOld.isRing
-          ? Promise.resolve(BigNumber.from(-1))
-          : // ? provider.getBalance(accounts[0]) // TODO
-          tokenOld.options.address
-          ? getTokenBalance(provider, tokenOld.options.address, accounts[0])
+        oldToken.options.address
+          ? getTokenBalance(provider, oldToken.options.address, accounts[0])
           : Promise.resolve(BigNumber.from(-1)),
-        tokenNew.isRing
-          ? Promise.resolve(BigNumber.from(-1))
-          : // ? provider.getBalance(accounts[0]) // TODO
-          tokenNew.options.address
-          ? getTokenBalance(provider, tokenNew.options.address, accounts[0])
+        newToken.options.address
+          ? getTokenBalance(provider, newToken.options.address, accounts[0])
           : Promise.resolve(BigNumber.from(-1)),
       ]).subscribe(([amountOld, amountNew]) => {
         setBalance({

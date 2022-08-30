@@ -3,7 +3,7 @@ import { BigNumber, utils } from "ethers";
 
 import { LukyButton } from "./LukyButton";
 import { TokenConfig } from "../types";
-import { useApi, useKtonBalance } from "../hooks";
+import { useApi, usetTokenBalance } from "../hooks";
 
 const SelectedItem = ({
   open,
@@ -82,7 +82,7 @@ const OptionItem = ({
   onSelect?: (index: number) => void;
 }) => {
   const { accounts } = useApi();
-  const { balance, refresh } = useKtonBalance(tokenConfig.options.address, accounts ? accounts[0] : null);
+  const { balance, refresh } = usetTokenBalance(tokenConfig.options.address, accounts ? accounts[0] : null);
 
   useEffect(() => {
     const sub$$ = refresh();
