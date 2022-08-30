@@ -8,7 +8,7 @@ import { ChainSlector } from "./ChainSelector";
 import { LukyAddress } from "./LukyAddress";
 import { MigratorSelector } from "./MigratorSelector";
 
-import { approveKton, migrateKton, allowanceKton, lukytoast } from "../utils";
+import { approveToken, migrateKton, allowanceToken, lukytoast } from "../utils";
 import { useApi } from "../hooks";
 import { MIGRATORS_CONF, TOKENS_CONF, CHAINS_CONF } from "../config";
 import { ChainID } from "../types";
@@ -63,7 +63,7 @@ export const MigratorCard = () => {
       const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
 
       setBusy(true);
-      await approveKton(provider, TOKENS_CONF[migrator.from].options.address, migrator.contract, {
+      await approveToken(provider, TOKENS_CONF[migrator.from].options.address, migrator.contract, {
         onError: (error) => {
           toastTxResult({ error });
           setBusy(false);
@@ -128,7 +128,7 @@ export const MigratorCard = () => {
       const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
 
       sub$$ = from(
-        allowanceKton(provider, TOKENS_CONF[migrator.from].options.address, accounts[0], migrator.contract)
+        allowanceToken(provider, TOKENS_CONF[migrator.from].options.address, accounts[0], migrator.contract)
       ).subscribe((amount) => {
         if (balance?.oldToken && amount.gt(balance.oldToken)) {
           setNeedApprove(false);

@@ -2,7 +2,7 @@ import React, { createContext, PropsWithChildren, useCallback, useEffect, useSta
 import { BigNumber, providers } from "ethers";
 import { Subscription, EMPTY, forkJoin, from } from "rxjs";
 
-import { getKtonBalance } from "../utils";
+import { getTokenBalance } from "../utils";
 import { ChainID } from "../types";
 import { MIGRATORS_CONF, TOKENS_CONF } from "../config";
 
@@ -37,13 +37,13 @@ export const ApiProvider = ({ children }: PropsWithChildren<unknown>) => {
           ? Promise.resolve(BigNumber.from(-1))
           : // ? provider.getBalance(accounts[0]) // TODO
           tokenOld.options.address
-          ? getKtonBalance(provider, tokenOld.options.address, accounts[0])
+          ? getTokenBalance(provider, tokenOld.options.address, accounts[0])
           : Promise.resolve(BigNumber.from(-1)),
         tokenNew.isRing
           ? Promise.resolve(BigNumber.from(-1))
           : // ? provider.getBalance(accounts[0]) // TODO
           tokenNew.options.address
-          ? getKtonBalance(provider, tokenNew.options.address, accounts[0])
+          ? getTokenBalance(provider, tokenNew.options.address, accounts[0])
           : Promise.resolve(BigNumber.from(-1)),
       ]).subscribe(([amountOld, amountNew]) => {
         setBalance({
