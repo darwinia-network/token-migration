@@ -15,7 +15,7 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
   [TokenSymbol.XWRing]: {
     type: "ERC20",
     options: {
-      address: "0xccFd19aA2A321e46CE62ad7740C58a79e4276f79",
+      address: "0x273131F7CB50ac002BDd08cA721988731F7e1092",
       symbol: TokenSymbol.XWRing,
       decimals: 18,
     },
