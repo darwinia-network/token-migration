@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BigNumber } from "ethers";
 import { Subscription, from } from "rxjs";
+import Fade from "react-reveal/Fade";
 
 import { ConnectMetamask } from "./ConnectMetamask";
 import { LukyButton } from "./LukyButton";
@@ -152,57 +153,59 @@ export const MigratorCard = () => {
   }, [accounts]);
 
   return (
-    <div className="w-[580px] border-[2px] border-primary">
-      <div className="bg-primary h-16 flex justify-between items-center px-4">
-        <span className="title text-xl font-bold">Migrate Now</span>
+    <Fade bottom>
+      <div className="w-[580px] border-[2px] border-primary">
+        <div className="bg-primary h-16 flex justify-between items-center px-4">
+          <span className="title text-xl font-bold">Migrate Now</span>
+
+          {accounts?.length && provider ? (
+            <div className="flex items-center space-x-2">
+              <ChainSlector />
+              <LukyAddress value={accounts[0]} />
+            </div>
+          ) : null}
+        </div>
 
         {accounts?.length && provider ? (
-          <div className="flex items-center space-x-2">
-            <ChainSlector />
-            <LukyAddress value={accounts[0]} />
+          <div
+            className={`pt-4 px-4 relative ${isSupported ? "" : "opacity-50"}`}
+            style={{ height: "calc(100% - 4rem)" }}
+          >
+            <MigratorSelector refreshTrigger={refreshTrigger} />
+
+            {isSupported ? (
+              <div className="absolute bottom-5 left-0 w-full px-4">
+                {needApprove ? (
+                  <LukyButton
+                    className="w-full"
+                    onClick={handleApprove}
+                    loading={busy}
+                    disable={!assets?.legacy?.balance?.gt(BigNumber.from(0))}
+                  >
+                    Approve
+                  </LukyButton>
+                ) : (
+                  <LukyButton
+                    className="w-full"
+                    type="primary"
+                    loading={busy}
+                    disable={!assets?.legacy?.balance?.gt(BigNumber.from(0))}
+                    onClick={handleMigrate}
+                  >
+                    Migrate Token
+                  </LukyButton>
+                )}
+              </div>
+            ) : (
+              <div className="flex items-center justify-center" style={{ height: "calc(100% - 4rem)" }}>
+                <p className="text-secondary">This Chain Is Not Supported</p>
+              </div>
+            )}
           </div>
-        ) : null}
+        ) : (
+          <ConnectMetamask style={{ height: "calc(100% - 4rem)" }} />
+        )}
       </div>
-
-      {accounts?.length && provider ? (
-        <div
-          className={`pt-4 px-4 relative ${isSupported ? "" : "opacity-50"}`}
-          style={{ height: "calc(100% - 4rem)" }}
-        >
-          <MigratorSelector refreshTrigger={refreshTrigger} />
-
-          {isSupported ? (
-            <div className="absolute bottom-5 left-0 w-full px-4">
-              {needApprove ? (
-                <LukyButton
-                  className="w-full"
-                  onClick={handleApprove}
-                  loading={busy}
-                  disable={!assets?.legacy?.balance?.gt(BigNumber.from(0))}
-                >
-                  Approve
-                </LukyButton>
-              ) : (
-                <LukyButton
-                  className="w-full"
-                  type="primary"
-                  loading={busy}
-                  disable={!assets?.legacy?.balance?.gt(BigNumber.from(0))}
-                  onClick={handleMigrate}
-                >
-                  Migrate Token
-                </LukyButton>
-              )}
-            </div>
-          ) : (
-            <div className="flex items-center justify-center" style={{ height: "calc(100% - 4rem)" }}>
-              <p className="text-secondary">This Chain Is Not Supported</p>
-            </div>
-          )}
-        </div>
-      ) : (
-        <ConnectMetamask style={{ height: "calc(100% - 4rem)" }} />
-      )}
-    </div>
+    </Fade>
   );
 };
