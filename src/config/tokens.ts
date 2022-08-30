@@ -6,9 +6,9 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
   [TokenSymbol.XRingClassic]: {
     type: "ERC20",
     options: {
-      address: "",
+      address: "0x7399Ea6C9d35124d893B8d9808930e9d3F211501",
       symbol: TokenSymbol.XRingClassic,
-      decimals: 18,
+      decimals: 9,
     },
     iconSrc: "/images/x-wring.svg",
     isRing: true,
@@ -16,7 +16,7 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
   [TokenSymbol.XWRing]: {
     type: "ERC20",
     options: {
-      address: "",
+      address: "0xccFd19aA2A321e46CE62ad7740C58a79e4276f79",
       symbol: TokenSymbol.XWRing,
       decimals: 18,
     },
