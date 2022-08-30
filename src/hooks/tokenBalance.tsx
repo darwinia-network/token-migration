@@ -5,7 +5,7 @@ import { from } from "rxjs";
 import { useApi } from "./api";
 import { getTokenBalance } from "../utils";
 
-export const usetTokenBalance = (contractAddress?: string | null, account?: string | null) => {
+export const useTokenBalance = (contractAddress?: string | null, account?: string | null) => {
   const { provider } = useApi();
   const [balance, setBalance] = useState(BigNumber.from(0));
 
