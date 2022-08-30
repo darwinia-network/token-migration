@@ -1,4 +1,4 @@
-import { BigNumber, ContractInterface, Contract, providers } from "ethers";
+import { BigNumber, BigNumberish, FixedNumber, ContractInterface, Contract, providers } from "ethers";
 import { triggerContract } from "../utils";
 import tokenAbi from "../abi/token.json";
 import migratorAbi from "../abi/migrator.json";
@@ -10,6 +10,9 @@ export const toShortAddress = (address: string) => {
 
   return address;
 };
+
+export const formatBalance = (value: BigNumber, unitName?: BigNumberish, decimals = 9): string =>
+  FixedNumber.fromValue(value, unitName).round(decimals).toString();
 
 const getErc20Balance = async (
   provider?: providers.Web3Provider | null,

@@ -1,9 +1,10 @@
 import React, { MouseEventHandler, useCallback, useEffect, useRef, useState } from "react";
-import { BigNumber, utils } from "ethers";
+import { BigNumber } from "ethers";
 
 import { LukyButton } from "./LukyButton";
-import { TokenConfig } from "../types";
+import { Asset, TokenConfig } from "../types";
 import { useApi, useTokenBalance } from "../hooks";
+import { formatBalance } from "../utils";
 
 const SelectedItem = ({
   open,
@@ -12,11 +13,11 @@ const SelectedItem = ({
   onClick,
 }: {
   open?: boolean;
-  receive?: BigNumber | null;
+  receive?: Asset | null;
   tokenConfig: TokenConfig;
   onClick?: MouseEventHandler<HTMLDivElement>;
 }) => {
-  const { provider, balance } = useApi();
+  const { provider, assets } = useApi();
 
   const handleAddToMetaMask = useCallback(async () => {
     try {
@@ -45,7 +46,10 @@ const SelectedItem = ({
 
       <div className="w-1/3 flex justify-center">
         <span className="text-sm leading-7 font-light text-secondary">
-          {utils.formatEther(receive || balance?.oldToken || BigNumber.from(0))}
+          {formatBalance(
+            receive?.balance || assets?.legacy?.balance || BigNumber.from(0),
+            receive?.decimals || assets?.legacy?.decimals
+          )}
         </span>
       </div>
 
@@ -103,7 +107,9 @@ const OptionItem = ({
       </div>
 
       <div className="w-1/3 flex justify-center">
-        <span className="text-sm leading-7 font-light text-secondary">{utils.formatEther(balance)}</span>
+        <span className="text-sm leading-7 font-light text-secondary">
+          {formatBalance(balance, tokenConfig.options.decimals)}
+        </span>
       </div>
 
       <div className={`w-1/3 ${disable ? "flex justify-end" : "invisible"}`}>
@@ -118,8 +124,8 @@ const OptionItem = ({
 interface Props {
   label: string;
   value: number;
-  balance?: BigNumber | null;
-  receive?: BigNumber | null;
+  asset?: Asset | null;
+  receive?: Asset | null;
   options: (TokenConfig & { disable?: boolean })[];
   refreshTrigger?: boolean;
   className?: string;
@@ -130,7 +136,7 @@ export const TokenSelector = ({
   label,
   value,
   options,
-  balance,
+  asset,
   receive,
   className,
   refreshTrigger,
@@ -160,7 +166,7 @@ export const TokenSelector = ({
       <div className="inline-flex items-center justify-between">
         <span className="text-sm leading-7 font-light text-secondary">{label}</span>
         <span className="text-sm leading-7 font-light text-secondary">
-          Balance: {`${balance ? utils.formatEther(balance) : "--"}`}
+          Balance: {`${asset?.balance ? formatBalance(asset.balance, asset.decimals) : "--"}`}
         </span>
       </div>
 

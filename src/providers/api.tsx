@@ -3,7 +3,7 @@ import { BigNumber, providers } from "ethers";
 import { Subscription, EMPTY, forkJoin, from } from "rxjs";
 
 import { getTokenBalance } from "../utils";
-import { ChainID } from "../types";
+import { ChainID, Asset } from "../types";
 import { MIGRATORS_CONF, TOKENS_CONF } from "../config";
 
 interface ApiCtx {
@@ -11,7 +11,7 @@ interface ApiCtx {
   provider: providers.Web3Provider | null;
   currentChain: number | null;
   migratorIndex: number | null;
-  balance: { oldToken: BigNumber | null; newToken: BigNumber | null } | null;
+  assets: { legacy: Asset | null; current: Asset | null } | null;
 
   refreshBalance: () => void;
   requestAccounts: () => void;
@@ -25,7 +25,7 @@ export const ApiProvider = ({ children }: PropsWithChildren<unknown>) => {
   const [provider, setProvider] = useState<providers.Web3Provider | null>(null);
   const [currentChain, setCurrentChain] = useState<number | null>(null);
   const [migratorIndex, setMigratorIndex] = useState<number | null>(null);
-  const [balance, setBalance] = useState<{ oldToken: BigNumber | null; newToken: BigNumber | null } | null>(null);
+  const [assets, setAssets] = useState<{ legacy: Asset | null; current: Asset | null } | null>(null);
 
   const getBalance = useCallback(() => {
     if (provider && migratorIndex !== null && MIGRATORS_CONF[currentChain as ChainID] && accounts?.length) {
@@ -40,13 +40,13 @@ export const ApiProvider = ({ children }: PropsWithChildren<unknown>) => {
           ? getTokenBalance(provider, newToken.options.address, accounts[0])
           : Promise.resolve(BigNumber.from(-1)),
       ]).subscribe(([amountOld, amountNew]) => {
-        setBalance({
-          oldToken: amountOld.isNegative() ? null : amountOld,
-          newToken: amountNew.isNegative() ? null : amountNew,
+        setAssets({
+          legacy: { decimals: oldToken.options.decimals, balance: amountOld.isNegative() ? null : amountOld },
+          current: { decimals: newToken.options.decimals, balance: amountNew.isNegative() ? null : amountNew },
         });
       });
     } else {
-      setBalance(null);
+      setAssets(null);
       return EMPTY.subscribe();
     }
   }, [provider, accounts, currentChain, migratorIndex]);
@@ -109,7 +109,7 @@ export const ApiProvider = ({ children }: PropsWithChildren<unknown>) => {
       value={{
         accounts,
         provider,
-        balance,
+        assets,
         currentChain,
         migratorIndex,
         requestAccounts,

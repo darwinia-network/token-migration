@@ -50,7 +50,7 @@ const toastTxResult = ({
 };
 
 export const MigratorCard = () => {
-  const { provider, balance, accounts, currentChain, migratorIndex, refreshBalance } = useApi();
+  const { provider, assets, accounts, currentChain, migratorIndex, refreshBalance } = useApi();
   const [busy, setBusy] = useState(false);
   const [needApprove, setNeedApprove] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
@@ -130,7 +130,7 @@ export const MigratorCard = () => {
       sub$$ = from(
         allowanceToken(provider, TOKENS_CONF[migrator.from].options.address, accounts[0], migrator.contract)
       ).subscribe((amount) => {
-        if (balance?.oldToken && amount.gt(balance.oldToken)) {
+        if (assets?.legacy?.balance && amount.gt(assets.legacy.balance)) {
           setNeedApprove(false);
         } else {
           setNeedApprove(true);
@@ -145,7 +145,7 @@ export const MigratorCard = () => {
         sub$$.unsubscribe();
       }
     };
-  }, [migratorIndex, currentChain, provider, accounts, balance?.oldToken]);
+  }, [migratorIndex, currentChain, provider, accounts, assets?.legacy?.balance]);
 
   useEffect(() => {
     setRefreshTrigger((prev) => !prev);
@@ -178,7 +178,7 @@ export const MigratorCard = () => {
                   className="w-full"
                   onClick={handleApprove}
                   loading={busy}
-                  disable={!balance?.oldToken?.gt(BigNumber.from(0))}
+                  disable={!assets?.legacy?.balance?.gt(BigNumber.from(0))}
                 >
                   Approve
                 </LukyButton>
@@ -187,7 +187,7 @@ export const MigratorCard = () => {
                   className="w-full"
                   type="primary"
                   loading={busy}
-                  disable={!balance?.oldToken?.gt(BigNumber.from(0))}
+                  disable={!assets?.legacy?.balance?.gt(BigNumber.from(0))}
                   onClick={handleMigrate}
                 >
                   Migrate Token
