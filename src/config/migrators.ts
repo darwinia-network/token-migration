@@ -5,7 +5,7 @@ export const MIGRATORS_CONF: Record<ChainID, Migrator[]> = {
     {
       from: TokenSymbol.XRingClassic,
       to: TokenSymbol.XWRing,
-      contract: "",
+      contract: "0xe09Be15DEC2B5cB6B46a1275048a21f1bBf0eF37",
       disable: true,
     },
     {
