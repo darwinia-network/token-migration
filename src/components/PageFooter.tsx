@@ -42,7 +42,7 @@ export const PageFooter = ({ className }: { className?: string }) => (
               target="_blank"
               rel="noopener noreferrer"
               href={item.isMail ? `mailto:${item.link}` : item.link}
-              className="inline-flex"
+              className="inline-flex hover:opacity-80"
             >
               <img alt="..." src={item.icon} width={20} height={20} />
             </a>

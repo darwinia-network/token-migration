@@ -24,7 +24,7 @@ export const PageHeader = ({ className }: { className?: string }) => (
               target="_blank"
               rel="noopener noreferrer"
               href={item.link}
-              className="text text-sm font-light"
+              className="text text-sm font-light hover:opacity-80"
             >
               {item.text}
             </a>
