@@ -25,4 +25,5 @@ jobs:
           preview_output: true
           project_name: token-migration
           enable_cache: true
+          enable_notify_comment: true
 
