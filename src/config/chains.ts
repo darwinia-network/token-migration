@@ -11,13 +11,13 @@ export const CHAINS_CONF: Record<ChainID, ChainConfig> = {
     logoSrc: "/images/crab-smart-chain.svg",
     disable: false,
   },
-  [ChainID.PangolinSmartChain]: {
-    chainId: utils.hexlify(ChainID.PangolinSmartChain),
-    chainName: ChainName.PangolinSmartChain,
-    rpcUrls: ["https://pangolin-rpc.darwinia.network"],
-    blockExplorerUrls: ["https://pangolin.subscan.io"],
+  // [ChainID.PangolinSmartChain]: {
+  //   chainId: utils.hexlify(ChainID.PangolinSmartChain),
+  //   chainName: ChainName.PangolinSmartChain,
+  //   rpcUrls: ["https://pangolin-rpc.darwinia.network"],
+  //   blockExplorerUrls: ["https://pangolin.subscan.io"],
 
-    logoSrc: "/images/pangolin-smart-chain.svg",
-    isTextNet: true,
-  },
+  //   logoSrc: "/images/pangolin-smart-chain.svg",
+  //   isTextNet: true,
+  // },
 };
