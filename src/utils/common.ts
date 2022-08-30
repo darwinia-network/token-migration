@@ -97,36 +97,21 @@ export const approveToken = async (
   }
 };
 
-export const migrateKton = async (
+export const migrateToken = async (
   provider?: providers.Web3Provider | null,
   contractAddress?: string | null,
+  methodName?: "migrate" | "migrateAll",
   callback?: {
     onError?: (error: Error) => void;
     onSuccess?: (txHash: string) => void;
     onResponse?: (txHash: string) => void;
   }
 ) => {
-  if (provider && contractAddress) {
+  if (provider && contractAddress && methodName) {
     const contract = new Contract(contractAddress, migratorAbi, provider.getSigner());
 
-    await triggerContract(contract, "migrate", [], txCallback({ ...callback }));
-    // await contract.migrate();
-  }
-};
-
-export const migrateRing = async (
-  provider?: providers.Web3Provider | null,
-  contractAddress?: string | null,
-  callback?: {
-    onError?: (error: Error) => void;
-    onSuccess?: (txHash: string) => void;
-    onResponse?: (txHash: string) => void;
-  }
-) => {
-  if (provider && contractAddress) {
-    const contract = new Contract(contractAddress, migratorAbi, provider.getSigner());
-
-    await triggerContract(contract, "migrateAll", [], txCallback({ ...callback }));
-    // await contract.migrateAll();
+    await triggerContract(contract, methodName, [], txCallback({ ...callback }));
+    // await contract.migrate(); // kton
+    // await contract.migrateAll(); // ring
   }
 };

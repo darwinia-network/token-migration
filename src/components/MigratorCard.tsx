@@ -8,7 +8,7 @@ import { ChainSlector } from "./ChainSelector";
 import { LukyAddress } from "./LukyAddress";
 import { MigratorSelector } from "./MigratorSelector";
 
-import { approveToken, migrateKton, allowanceToken, lukytoast } from "../utils";
+import { approveToken, migrateToken, allowanceToken, lukytoast } from "../utils";
 import { useApi } from "../hooks";
 import { MIGRATORS_CONF, TOKENS_CONF, CHAINS_CONF } from "../config";
 import { ChainID } from "../types";
@@ -95,7 +95,7 @@ export const MigratorCard = () => {
       const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
 
       setBusy(true);
-      await migrateKton(provider, migrator.contract, {
+      await migrateToken(provider, migrator.contract, migrator.methodName, {
         onError: (error) => {
           toastTxResult({ error });
           setBusy(false);

@@ -11,7 +11,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 9,
     },
     iconSrc: "/images/x-wring.svg",
-    isRing: true,
   },
   [TokenSymbol.XWRing]: {
     type: "ERC20",
@@ -21,7 +20,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/x-wring.svg",
-    isRing: true,
   },
 
   [TokenSymbol.WCKtonClassic]: {
@@ -32,7 +30,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/ckton.svg",
-    isRing: false,
   },
   [TokenSymbol.CKton]: {
     type: "ERC20",
@@ -42,7 +39,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/ckton.svg",
-    isRing: false,
   },
 
   // Pangolin Smart Chain
@@ -55,7 +51,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/x-wpring.svg",
-    isRing: true,
   },
   [TokenSymbol.XWORing]: {
     type: "ERC20",
@@ -65,7 +60,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/x-wpring.svg",
-    isRing: true,
   },
 
   [TokenSymbol.WPKtonClassic]: {
@@ -76,7 +70,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/pkton.svg",
-    isRing: false,
   },
   [TokenSymbol.PKton]: {
     type: "ERC20",
@@ -86,6 +79,5 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/pkton.svg",
-    isRing: false,
   },
 };
