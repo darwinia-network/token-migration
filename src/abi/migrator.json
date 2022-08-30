@@ -23,6 +23,13 @@
     "type": "function"
   },
   {
+    "name": "migrateAll",
+    "type": "function",
+    "inputs": [],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
     "inputs": [],
     "name": "new_wckton",
     "outputs": [
