@@ -6,43 +6,39 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
   [TokenSymbol.XRingClassic]: {
     type: "ERC20",
     options: {
-      address: "",
+      address: "0x7399Ea6C9d35124d893B8d9808930e9d3F211501",
       symbol: TokenSymbol.XRingClassic,
-      decimals: 18,
+      decimals: 9,
     },
     iconSrc: "/images/x-wring.svg",
-    isRing: true,
   },
   [TokenSymbol.XWRing]: {
     type: "ERC20",
     options: {
-      address: "",
+      address: "0x273131F7CB50ac002BDd08cA721988731F7e1092",
       symbol: TokenSymbol.XWRing,
       decimals: 18,
     },
     iconSrc: "/images/x-wring.svg",
-    isRing: true,
   },
 
   [TokenSymbol.WCKtonClassic]: {
     type: "ERC20",
     options: {
-      address: "",
+      address: "0x159933c635570d5042723359fbd1619dfe83d3f3",
       symbol: TokenSymbol.WCKtonClassic,
       decimals: 18,
     },
     iconSrc: "/images/ckton.svg",
-    isRing: false,
   },
   [TokenSymbol.CKton]: {
     type: "ERC20",
     options: {
-      address: "",
+      address: "0x0000000000000000000000000000000000000402",
       symbol: TokenSymbol.CKton,
       decimals: 18,
     },
     iconSrc: "/images/ckton.svg",
-    isRing: false,
   },
 
   // Pangolin Smart Chain
@@ -55,7 +51,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/x-wpring.svg",
-    isRing: true,
   },
   [TokenSymbol.XWORing]: {
     type: "ERC20",
@@ -65,7 +60,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/x-wpring.svg",
-    isRing: true,
   },
 
   [TokenSymbol.WPKtonClassic]: {
@@ -76,7 +70,6 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/pkton.svg",
-    isRing: false,
   },
   [TokenSymbol.PKton]: {
     type: "ERC20",
@@ -86,6 +79,5 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/pkton.svg",
-    isRing: false,
   },
 };

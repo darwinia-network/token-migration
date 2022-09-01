@@ -14,4 +14,5 @@ export interface ChainConfig extends AddEthereumChainParameter {
   logoSrc: string;
   isTextNet?: boolean;
   disable?: boolean;
+  hidden?: boolean;
 }

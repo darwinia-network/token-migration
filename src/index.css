@@ -42,16 +42,13 @@ code {
 
 @layer base {
   html {
-    @apply font-[JetBrainsMono-Light]; }
+    @apply font-[JetBrainsMono-Light];
+  }
 
   body {
     @apply bg-black;
     @apply text-white;
   }
-
-  a,
-  button {
-    @apply hover:opacity-80; }
 }
 
 @layer components {

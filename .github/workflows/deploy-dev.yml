@@ -25,4 +25,8 @@ jobs:
           preview_output: true
           project_name: token-migration
           enable_cache: true
+          enable_notify_comment: true
+          enable_notify_slack: true
+          slack_channel: darwinia-apps
+          slack_webhook: ${{ secrets.SLACK_INCOMING_WEBHOOK_URL }}
 

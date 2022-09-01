@@ -1,6 +1,6 @@
-import { BigNumber, ContractInterface, Contract, providers } from "ethers";
+import { BigNumber, BigNumberish, FixedNumber, ContractInterface, Contract, providers } from "ethers";
 import { triggerContract } from "../utils";
-import ktonAbi from "../abi/kton.json";
+import tokenAbi from "../abi/token.json";
 import migratorAbi from "../abi/migrator.json";
 
 export const toShortAddress = (address: string) => {
@@ -10,6 +10,9 @@ export const toShortAddress = (address: string) => {
 
   return address;
 };
+
+export const formatBalance = (value: BigNumber, unitName?: BigNumberish, decimals = 9): string =>
+  FixedNumber.fromValue(value, unitName).round(decimals).toString();
 
 const getErc20Balance = async (
   provider?: providers.Web3Provider | null,
@@ -26,22 +29,22 @@ const getErc20Balance = async (
   return BigNumber.from(0);
 };
 
-export const getKtonBalance = async (
+export const getTokenBalance = async (
   provider?: providers.Web3Provider | null,
   contractAddress?: string | null,
   account?: string | null
 ) => {
-  return await getErc20Balance(provider, contractAddress, ktonAbi, account);
+  return await getErc20Balance(provider, contractAddress, tokenAbi, account);
 };
 
-export const allowanceKton = async (
+export const allowanceToken = async (
   provider?: providers.Web3Provider | null,
   contractAddress?: string | null,
   owner?: string | null,
   spender?: string | null
 ) => {
   if (provider && contractAddress && owner && spender) {
-    const contract = new Contract(contractAddress, ktonAbi, provider);
+    const contract = new Contract(contractAddress, tokenAbi, provider);
 
     return (await contract.allowance(owner, spender)) as Promise<BigNumber>;
   } else {
@@ -74,7 +77,7 @@ const txCallback = ({
   };
 };
 
-export const approveKton = async (
+export const approveToken = async (
   provider?: providers.Web3Provider | null,
   contractAddress?: string | null,
   spender?: string | null,
@@ -85,7 +88,7 @@ export const approveKton = async (
   }
 ) => {
   if (provider && contractAddress && spender) {
-    const contract = new Contract(contractAddress, ktonAbi, provider.getSigner());
+    const contract = new Contract(contractAddress, tokenAbi, provider.getSigner());
 
     await triggerContract(
       contract,
@@ -97,19 +100,21 @@ export const approveKton = async (
   }
 };
 
-export const migrateKton = async (
+export const migrateToken = async (
   provider?: providers.Web3Provider | null,
   contractAddress?: string | null,
+  methodName?: "migrate" | "migrateAll",
   callback?: {
     onError?: (error: Error) => void;
     onSuccess?: (txHash: string) => void;
     onResponse?: (txHash: string) => void;
   }
 ) => {
-  if (provider && contractAddress) {
+  if (provider && contractAddress && methodName) {
     const contract = new Contract(contractAddress, migratorAbi, provider.getSigner());
 
-    await triggerContract(contract, "migrate", [], txCallback({ ...callback }));
-    // await contract.migrate();
+    await triggerContract(contract, methodName, [], txCallback({ ...callback }));
+    // await contract.migrate(); // kton
+    // await contract.migrateAll(); // ring
   }
 };
