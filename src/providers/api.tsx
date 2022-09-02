@@ -83,7 +83,7 @@ export const ApiProvider = ({ children }: PropsWithChildren<unknown>) => {
         setCurrentChain(chainId);
 
         if (MIGRATORS_CONF[chainId as ChainID]) {
-          setMigratorIndex(0);
+          setMigratorIndex(MIGRATORS_CONF[chainId as ChainID].findIndex((item) => !item.disable) || 0);
         } else {
           setMigratorIndex(null);
         }
