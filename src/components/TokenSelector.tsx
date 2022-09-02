@@ -55,7 +55,7 @@ const SelectedItem = ({
 
       <div className="w-1/3 flex justify-end">
         {receive ? (
-          <LukyButton onClick={handleAddToMetaMask} disable={!tokenConfig.options.address}>
+          <LukyButton onClick={handleAddToMetaMask} disable={!!tokenConfig.disable || !tokenConfig.options.address}>
             Add To MetaMask
           </LukyButton>
         ) : (

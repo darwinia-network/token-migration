@@ -13,4 +13,5 @@ export enum TokenSymbol {
 
 export interface TokenConfig extends WatchAssetParams {
   iconSrc: string;
+  disable?: boolean;
 }
