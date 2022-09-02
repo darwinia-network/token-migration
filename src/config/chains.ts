@@ -19,6 +19,5 @@ export const CHAINS_CONF: Record<ChainID, ChainConfig> = {
 
     logoSrc: "/images/pangolin-smart-chain.svg",
     isTextNet: true,
-    hidden: true,
   },
 };
