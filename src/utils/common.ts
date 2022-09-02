@@ -20,10 +20,14 @@ const getErc20Balance = async (
   contractInterface?: ContractInterface | null,
   account?: string | null
 ) => {
-  if (provider && contractAddress && contractInterface && account) {
-    const contract = new Contract(contractAddress, contractInterface, provider);
+  try {
+    if (provider && contractAddress && contractInterface && account) {
+      const contract = new Contract(contractAddress, contractInterface, provider);
 
-    return (await contract.balanceOf(account)) as Promise<BigNumber>;
+      return (await contract.balanceOf(account)) as Promise<BigNumber>;
+    }
+  } catch (err) {
+    console.error(err);
   }
 
   return BigNumber.from(0);

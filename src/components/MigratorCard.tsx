@@ -56,12 +56,18 @@ export const MigratorCard = () => {
   const [needApprove, setNeedApprove] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(false);
 
+  const migrator = useMemo(() => {
+    if (migratorIndex !== null && currentChain) {
+      return MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
+    }
+    return null;
+  }, [migratorIndex, currentChain]);
+
   const isSupported = useMemo(() => currentChain !== null && CHAINS_CONF[currentChain as ChainID], [currentChain]);
 
   const handleApprove = useCallback(async () => {
-    if (migratorIndex !== null && currentChain && provider) {
+    if (migrator && provider) {
       const chainConfig = CHAINS_CONF[currentChain as ChainID];
-      const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
 
       setBusy(true);
       await approveToken(provider, TOKENS_CONF[migrator.from].options.address, migrator.contract, {
@@ -88,12 +94,11 @@ export const MigratorCard = () => {
         },
       });
     }
-  }, [migratorIndex, currentChain, provider]);
+  }, [migrator, provider]);
 
   const handleMigrate = useCallback(async () => {
-    if (migratorIndex !== null && currentChain && provider) {
+    if (migrator && provider) {
       const chainConfig = CHAINS_CONF[currentChain as ChainID];
-      const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
 
       setBusy(true);
       await migrateToken(provider, migrator.contract, migrator.methodName, {
@@ -120,14 +125,12 @@ export const MigratorCard = () => {
         },
       });
     }
-  }, [migratorIndex, currentChain, provider, refreshBalance]);
+  }, [migrator, provider, refreshBalance]);
 
   useEffect(() => {
     let sub$$: Subscription;
 
-    if (migratorIndex !== null && currentChain && provider && accounts) {
-      const migrator = MIGRATORS_CONF[currentChain as ChainID][migratorIndex];
-
+    if (migrator && provider && accounts) {
       sub$$ = from(
         allowanceToken(provider, TOKENS_CONF[migrator.from].options.address, accounts[0], migrator.contract)
       ).subscribe((amount) => {
@@ -146,7 +149,7 @@ export const MigratorCard = () => {
         sub$$.unsubscribe();
       }
     };
-  }, [migratorIndex, currentChain, provider, accounts, assets?.legacy?.balance]);
+  }, [migrator, provider, accounts, assets?.legacy?.balance]);
 
   useEffect(() => {
     setRefreshTrigger((prev) => !prev);
@@ -189,7 +192,7 @@ export const MigratorCard = () => {
                     className="w-full"
                     type="primary"
                     loading={busy}
-                    disable={!assets?.legacy?.balance?.gt(BigNumber.from(0))}
+                    disable={!!migrator?.disable || !assets?.legacy?.balance?.gt(BigNumber.from(0))}
                     onClick={handleMigrate}
                   >
                     Migrate Token
