@@ -20,7 +20,7 @@ export const TOKENS_CONF: Record<TokenSymbol, TokenConfig> = {
       decimals: 18,
     },
     iconSrc: "/images/x-wring.svg",
-    disable: true,
+    disable: false,
   },
 
   [TokenSymbol.WCKtonClassic]: {
