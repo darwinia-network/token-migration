@@ -20,7 +20,7 @@ export const MigratorSelector = ({ refreshTrigger }: { refreshTrigger?: boolean 
         asset={assets?.legacy}
         options={MIGRATORS_CONF[currentChain as ChainID]
           .map((item) => ({ symbol: item.from, disable: item.disable }))
-          .map(({ symbol, disable }) => ({ ...TOKENS_CONF[symbol], disable }))}
+          .map(({ symbol, disable }) => ({ ...TOKENS_CONF[symbol], disable: TOKENS_CONF[symbol].disable || disable }))}
         refreshTrigger={refreshTrigger}
         onSelect={setMigratorIndex}
       />
@@ -31,7 +31,7 @@ export const MigratorSelector = ({ refreshTrigger }: { refreshTrigger?: boolean 
         receive={assets?.legacy}
         options={MIGRATORS_CONF[currentChain as ChainID]
           .map((item) => ({ symbol: item.to, disable: item.disable }))
-          .map(({ symbol, disable }) => ({ ...TOKENS_CONF[symbol], disable }))}
+          .map(({ symbol, disable }) => ({ ...TOKENS_CONF[symbol], disable: TOKENS_CONF[symbol].disable || disable }))}
         className="mt-5"
       />
     </>
